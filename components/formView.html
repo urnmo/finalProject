@@ -1,0 +1,9 @@
+
+        <!--therapist form menu page.
+    set up a ng-repeat for form items with discription-->
+        <h2>Form Menu Page</h2>
+        <ol ng-repeat="form in forms" class="medforms">
+            <li> <a href="" target="_blank" ui-sref="theForm({ })">{{form.title}}</a> <!--add property to identify form here and add link to form page-->
+            </li>
+            <p class="formDescriptor">{{form.description}}</p>
+        </ol>

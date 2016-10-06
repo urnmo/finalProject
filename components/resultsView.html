@@ -1,0 +1,9 @@
+        <!--therapist results page
+    set up a ng-repeat for user results with description-->
+        <h2>Results Page</h2>
+        <ol ng-repeat="result in results" class="formResults">
+            <li> <a ui-sref="theRecord({ })">            <!--add property here-->
+                </a>
+            </li>
+            <p class="resultsDescriptor"><span>{{result.user}}</span><span>{{result.form}}</span><span>{{result.date}}</span></p>
+        </ol>
