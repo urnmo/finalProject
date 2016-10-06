@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="MedForm">
 
 <head>
     <title>TIY Final Project</title>
@@ -12,17 +12,15 @@
 <body>
 
     <header>
-    <!--this will appear on all pages-->
+        <!--this will appear on all pages-->
         <h3>Medical Form Fill Service</h3>
         <nav>
-        <a ui-sref="home">Home</a>
-        <a ui-sref="forms">Forms</a>
-        <a ui-sref="Results">Results</a>
+            <a ui-sref="home">Home</a>
+            <a ui-sref="forms">Forms</a>
+            <a ui-sref="Results">Results</a>
         </nav>
-    <!--if logged in this will show-->
-        <h2>Logged in as {{ user }}.</h2>
-        <button id="logoutBtn" ng-click="logout(username)">Logout</button>
-    <!--if not logged in this will show-->
+
+        <!--if not logged in this will show-->
         <h2>Please log in</h2>
         <input ng-model="username" placeholder="USERNAME" type="text">
         <input ng-model="password" placeholder="PASSWORD" type="text">
@@ -31,9 +29,34 @@
 
     <main>
         <ui-view></ui-view>
+
+        <!--therapist form menu page.
+    set up a ng-repeat for form items with discription-->
+        <h2>Form Menu Page</h2>
+        <ol ng-repeat="form in forms" class="medforms">
+            <li> <a ui-sref="theForm({ })">{{form.title}}</a>
+            </li>
+            <!--add property to identify form here-->
+            <p class="formDescriptor">{{form.description}}</p>
+        </ol>
+
+        <!--therapist results page
+    set up a ng-repeat for user results with description-->
+        <h2>Results Page</h2>
+        <ol ng-repeat="result in results" class="formResults">
+            <li> <a ui-sref="theRecord({ })">
+                </a>
+            </li>
+            <!--add property here-->
+            <p class="resultsDescriptor"><span>{{result.user}}</span><span>{{result.form}}</span><span>{{result.date}}</span></p>
+        </ol>
+
     </main>
 
     <footer>
+        <!--if logged in this will show-->
+        <h2>Logged in as {{ user }}.</h2>
+        <button id="logoutBtn" ng-click="logout(username)">Logout</button>
     </footer>
 
 </body>
