@@ -1,0 +1,22 @@
+{
+  "name": "finalp",
+  "version": "1.0.0",
+  "description": "TIY Final Project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/urnmo/finalProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/urnmo/finalProject/issues"
+  },
+  "homepage": "https://github.com/urnmo/finalProject#readme",
+  "dependencies": {
+    "foundation-apps": "^1.2.0"
+  }
+}

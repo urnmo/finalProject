@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>TIY Final Project</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.0-beta.3/angular-ui-router.min.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<body>
+
+    <header>
+    <!--this will appear on all pages-->
+        <h3>Medical Form Fill Service</h3>
+        <nav>
+        <a ui-sref="home">Home</a>
+        <a ui-sref="forms">Forms</a>
+        <a ui-sref="Results">Results</a>
+        </nav>
+    <!--if logged in this will show-->
+        <h2>Logged in as {{ user }}.</h2>
+        <button id="logoutBtn" ng-click="logout(username)">Logout</button>
+    <!--if not logged in this will show-->
+        <h2>Please log in</h2>
+        <input ng-model="username" placeholder="USERNAME" type="text">
+        <input ng-model="password" placeholder="PASSWORD" type="text">
+        <button id="loginBtn" ng-click="login(username, password)">Login</button>
+    </header>
+
+    <main>
+        <ui-view></ui-view>
+    </main>
+
+    <footer>
+    </footer>
+
+</body>
+
+</html>
