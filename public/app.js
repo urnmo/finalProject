@@ -7,22 +7,59 @@ app.config(function ($stateProvider) {
         url: "/login",
         component: "loginPage",
     })
+    $stateProvider.state({
+        name: "forms",
+        url: "/forms",
+        component: "formsPage",
+    })
 
+    $stateProvider.state({
+        name: "records",
+        url: "/records",
+        component: "recordsPage"
+    })
 });
 // Login page component
 app.component("loginPage", {
-    templateUrl: "loginPage.html",
-    controller: "loginController",
+    templateUrl: "loginView.html",
+    controller: "loginPageController",
 });
-
-
+//forms page component
+app.component("formsPage", {
+    templateUrl: "formView.html",
+    controller: "formViewController",
+})
+// RecordsPage component
+app.component("recordsPage",{
+    templateUrl: "recordsView.html",
+    controller: "recordsPageController",
+})
 // Login page controller
 app.controller("loginPageController", function ($scope, loginPageService) {
     console.log("load1"),
-    $scope.credentials = loginPageService.loginUser();
+        $scope.loginUser = function (username, password) {
+            $scope.credentials = loginPageService.loginUser(username, password);
+            $scope.username = "";
+            $scope.password = "";
+        }
 });
 
+// FormsPage controller
+app.controller("formsPageController", function ($scope){
+    console.log("load2");
+    $scope.forms = formsPageService.allForms();
+})
+
+// RecordsPage controller
+app.controller("recordsPageController",function ($scope,){
+    console.log("load3");
+
+})
+
+//login page service
 app.factory("loginPageService", function () {
+    // LoginService
+    // need to take the value of ng-model=“username" ng-model="password" and push to a new object to send to backend
     let credentials = {
         userName: null,
         passWord: null,
@@ -42,8 +79,53 @@ app.factory("loginPageService", function () {
     }
 })
 
-// LoginService
+// FormsPageService
+app.factory("formsPageService", function ($http){
+    // render titles/links to all available forms
+ let forms = [];
+//  is this where I need a listener/callback
+ $http({
+     method: "GET",
+     url:  "",
+ }).then(function (response){
+     angular.copy(response.data, allForms);
+ });
+return {
+    getForms: function(){
+        return allForms;
+    }
+}
+//function: request all users from backend
+// render all users
 
-// need to take the value of ng-model=“username" ng-model="password" and push to a new object to send to backend
-// need to receive validation from backend that user is valid
-// if user is valid then load homepage
+
+});
+// function: when form is clicked make a request to the backend for specific form and if it is a returning user populate user info. 
+// display selected form in a new window 
+
+// RecordsPageService
+app.factory("recordsPageService", function(http){
+    // function: request all results from the backend
+    $http({
+            method: "GET",
+            url: "",
+    }).then(function(response){
+        angular.copy(response.data, allRecords);
+    });
+    return{
+        getRecords: function(){
+            return allRecords;
+        }
+    }
+    // function: search through the backend for user results
+    // render search results
+});
+
+
+
+
+
+
+
+
+
