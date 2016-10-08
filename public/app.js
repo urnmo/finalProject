@@ -12,18 +12,14 @@ app.config(function ($stateProvider) {
 // Login page component
 app.component("loginPage", {
     templateUrl: "loginPage.html",
-    controller: "loginPageController",
+    controller: "loginController",
 });
 
 
 // Login page controller
 app.controller("loginPageController", function ($scope, loginPageService) {
     console.log("load1"),
-    $scope.loginUser = function (username, password) {
-        $scope.credentials = loginPageService.loginUser(username, password);
-        $scope.username = "";
-        $scope.password = "";
-    }
+    $scope.credentials = loginPageService.loginUser();
 });
 
 app.factory("loginPageService", function () {
