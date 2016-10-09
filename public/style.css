@@ -1,0 +1,17 @@
+* {
+  font-family: 'Bitter', serif; }
+
+header {
+  background: #52658F;
+  height: 100px; }
+  header h2 {
+    margin: 0% 2%;
+    padding: 2% 0% 0% 0%; }
+
+main {
+  height: 600px;
+  background: #F7F5E6; }
+
+footer {
+  background: #333A56;
+  height: 75px; }

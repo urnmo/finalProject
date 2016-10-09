@@ -1,0 +1,29 @@
+$color1: #F7F5E6;
+$color2: #333A56;
+$color3: #52658F;
+$color4: #E8E8E8;
+
+
+
+
+* {font-family: 'Bitter', serif;
+};
+
+header {
+    background: $color3;
+    height: 100px;
+h2{
+    margin: 0% 2%;
+    padding: 2% 0% 0% 0%;
+}
+};
+
+main {
+    height: 600px;
+    background: $color1;
+};
+
+footer {
+    background: $color2;
+    height: 75px;
+};

@@ -2,11 +2,7 @@ let app = angular.module('MedFormsApp', ['ui.router']);
 
 //state provider & states
 app.config(function ($stateProvider) {
-    $stateProvider.state({
-        name: "loginState",
-        url: "/login",
-        component: "loginPage",
-    })
+
     $stateProvider.state({
         name: "forms",
         url: "/forms",
@@ -19,93 +15,71 @@ app.config(function ($stateProvider) {
         component: "recordsPage"
     })
 });
-// Login page component
-// app.component("loginPage", {
-//     templateUrl: "loginView.html",
-//     controller: "loginPageController",
-// });
+
 //forms page component
 app.component("formsPage", {
-    templateUrl: "formView.html",
-    controller: "formViewController",
-})
+    templateUrl: "formPage.html",
+    controller: "formPageController",
+});
 // RecordsPage component
 app.component("recordsPage", {
     templateUrl: "recordsView.html",
     controller: "recordsPageController",
-})
+});
 // Login page controller
-app.controller("loginPageController", function ($scope) {
+app.controller("loginPageController", function ($scope, $http) {
     console.log("load1");
      // need to take the value of ng-model=“username" ng-model="password" and push to a new object to send to backend
-    let credentials = {
-        userName: null,
-        passWord: null,
+    let user = {
+        username: null,
+        password: null,
         valid: null,
     };
+   
+    $scope.loggedIn = true;
 
-    $scope.loginUser = function () {
-        username = $scope.userName;
-        password = $scope.passWord;
-        console.log("credentials");
-        return credentials
+    $scope.loginUser = function ($scope) {
+       username =  $scope.username;
+        password =  $scope.password;
+        console.log(user);
+        return user
     };
 
 });
 
 // FormsPage controller
-app.controller("formsPageController", function ($scope) {
+app.controller("formsPageController", function ($scope, formsPageService) {
     console.log("load2");
     $scope.forms = formsPageService.allForms();
-})
+});
 
 // RecordsPage controller
 app.controller("recordsPageController", function ($scope) {
     console.log("load3");
-})
+});
 
-//login page service
-// app.factory("loginPageService", function () {
-//     // LoginService
-//    
-//     let credentials = {
-//         userName: null,
-//         passWord: null,
-//         valid: null,
-//     };
-
-//     return {
-//         loginUser: function (username, password) {
-//             if (username !== "" && password !== "") {
-//                 credentials = username, password;
-//                 loginPageService.username = "";
-//                 loginPageService.password = "";
-//                 console.log(credentials);
-//                 return credentials
-//             }
-//         }
-//     }
-// })
 
 // FormsPageService
 app.factory("formsPageService", function ($http) {
     // render titles/links to all available forms
-    let forms = [];
+    let forms = [{title: "form1", description: "This is the foot form."}, {title: "form2", description: "This is the back form."}, {title: "form3", description: "This is the neck form."}, {title: "form4", description: "This is the arm form."},];
     //  is this where I need a listener/callback
-    $http({
-        method: "GET",
-        url: "",
-    }).then(function (response) {
-        angular.copy(response.data, allForms);
-    });
-    return {
-        getForms: function () {
-            return allForms;
-        }
-    }
+    // $http({
+    //     method: "GET",
+    //     url: "",
+    // }).then(function (response) {
+    //     angular.copy(response.data, allForms);
+    // });
+    // return {
+    //     getForms: function () {
+    //         return allForms;
+    //     }
+    // }
     //function: request all users from backend
     // render all users
-
+    return{ 
+        allForms: function (){return forms;}
+    }
 
 });
 // function: when form is clicked make a request to the backend for specific form and if it is a returning user populate user info. 
@@ -114,17 +88,17 @@ app.factory("formsPageService", function ($http) {
 // RecordsPageService
 app.factory("recordsPageService", function (http) {
     // function: request all results from the backend
-    $http({
-        method: "GET",
-        url: "",
-    }).then(function (response) {
-        angular.copy(response.data, allRecords);
-    });
-    return {
-        getRecords: function () {
-            return allRecords;
-        }
-    }
+    // $http({
+    //     method: "GET",
+    //     url: "",
+    // }).then(function (response) {
+    //     angular.copy(response.data, allRecords);
+    // });
+    // return {
+    //     getRecords: function () {
+    //         return allRecords;
+    //     }
+    // }
     // function: search through the backend for user results
     // render search results
 });
