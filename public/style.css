@@ -6,12 +6,33 @@ header {
   height: 100px; }
   header h2 {
     margin: 0% 2%;
-    padding: 2% 0% 0% 0%; }
+    padding: 2% 0% 0% 0%;
+    color: #E8E8E8; }
+  header h3 {
+    margin: 0% 2%;
+    padding: 2% 0% 0% 0%;
+    color: #E8E8E8; }
+  header nav {
+    margin: 0% 2%;
+    padding: 2% 0% 0% 0%;
+    color: #E8E8E8; }
 
 main {
   height: 600px;
   background: #F7F5E6; }
+  main h2 {
+    margin: 0% 2%;
+    padding: 2% 0% 0% 0%;
+    color: #333A56; }
 
 footer {
   background: #333A56;
   height: 75px; }
+  footer h2 {
+    margin: 0% 2%;
+    padding: 2% 0% 0% 0%;
+    color: #E8E8E8;
+    display: inline-block; }
+  footer button {
+    margin: 0% 2%;
+    display: inline; }

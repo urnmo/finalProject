@@ -36,11 +36,11 @@ app.controller("loginPageController", function ($scope, $http) {
         valid: null,
     };
    
-    $scope.loggedIn = true;
+    $scope.loggedIn = false;
 
-    $scope.loginUser = function ($scope) {
-       username =  $scope.username;
-        password =  $scope.password;
+    $scope.loginUser = function (username, password) {
+        user.username = username;
+        user.password = password
         console.log(user);
         return user
     };
@@ -48,7 +48,7 @@ app.controller("loginPageController", function ($scope, $http) {
 });
 
 // FormsPage controller
-app.controller("formsPageController", function ($scope, formsPageService) {
+app.controller("formPageController", function ($scope, formsPageService) {
     console.log("load2");
     $scope.forms = formsPageService.allForms();
 });
@@ -60,7 +60,7 @@ app.controller("recordsPageController", function ($scope) {
 
 
 // FormsPageService
-app.factory("formsPageService", function ($http) {
+app.factory("formsPageService", function () {
     // render titles/links to all available forms
     let forms = [{title: "form1", description: "This is the foot form."}, {title: "form2", description: "This is the back form."}, {title: "form3", description: "This is the neck form."}, {title: "form4", description: "This is the arm form."},];
     //  is this where I need a listener/callback
@@ -86,7 +86,7 @@ app.factory("formsPageService", function ($http) {
 // display selected form in a new window 
 
 // RecordsPageService
-app.factory("recordsPageService", function (http) {
+app.factory("recordsPageService", function () {
     // function: request all results from the backend
     // $http({
     //     method: "GET",

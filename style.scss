@@ -15,15 +15,42 @@ header {
 h2{
     margin: 0% 2%;
     padding: 2% 0% 0% 0%;
+    color: $color4;
+}
+h3{
+    margin: 0% 2%;
+    padding: 2% 0% 0% 0%;
+    color: $color4;
+}
+nav{
+    margin: 0% 2%;
+    padding: 2% 0% 0% 0%;
+    color: $color4;
 }
 };
 
 main {
     height: 600px;
     background: $color1;
+        h2{
+    margin: 0% 2%;
+    padding: 2% 0% 0% 0%;
+    color: $color2;
+    }
 };
 
 footer {
     background: $color2;
     height: 75px;
+
+    h2{
+    margin: 0% 2%;
+    padding: 2% 0% 0% 0%;
+    color: $color4;
+    display: inline-block;
+}
+button{
+    margin: 0% 2%;
+    display: inline;
+}
 };
