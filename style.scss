@@ -1,9 +1,17 @@
+
+
+@import 'node_modules/foundation-sites/scss/foundation';
+
+@include foundation-global-styles;
+@include foundation-grid;
+
+
 $color1: #F7F5E6;
 $color2: #333A56;
 $color3: #52658F;
 $color4: #E8E8E8;
 
-
+$grid-column-gutter: 50px;
 
 
 * {font-family: 'Bitter', serif;
@@ -27,15 +35,30 @@ nav{
     padding: 2% 0% 0% 0%;
     color: $color4;
 }
+input{
+    margin: 2% 2%;
+    // padding: 2% 0% 0% 0%;
+    color: $color4;
+}
 };
 
 main {
+    @include grid-row();
     height: 600px;
     background: $color1;
-        h2{
+        
+    h2{
     margin: 0% 2%;
     padding: 2% 0% 0% 0%;
     color: $color2;
+    }
+
+    #patients{
+        @include grid-column(6);
+    }
+
+    #forms{
+        @include grid-column(6);
     }
 };
 

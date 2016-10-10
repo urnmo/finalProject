@@ -1,10 +1,19 @@
 
         <!--therapist form menu page.
     set up a ng-repeat for form items with discription-->
-    
-        <h2>Form Menu Page</h2>
-        <ol ng-repeat="form in forms" class="medforms">
+        <div id="patients">
+       <h2>Patients</h2>
+        <ul ng-repeat="patient in patients" class="medforms">
+            <li> <a href="" target="_blank" ui-sref="thePatient({ })">{{patient.name}}</a> <!--add property to identify form here and add link to form page-->
+            </li>
+            <p class="patientDescriptor">Patient ID: {{patient.id}}</p>
+        </ul>
+        </div>
+        <div id="forms">
+         <h2>Forms</h2>
+        <ul ng-repeat="form in forms" class="medforms">
             <li> <a href="" target="_blank" ui-sref="theForm({ })">{{form.title}}</a> <!--add property to identify form here and add link to form page-->
             </li>
             <p class="formDescriptor">{{form.description}}</p>
-        </ol>
+        </ul>
+        </div>

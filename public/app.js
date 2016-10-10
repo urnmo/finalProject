@@ -36,7 +36,7 @@ app.controller("loginPageController", function ($scope, $http) {
         valid: null,
     };
    
-    $scope.loggedIn = false;
+    $scope.loggedIn = true;
 
     $scope.loginUser = function (username, password) {
         user.username = username;
@@ -51,6 +51,7 @@ app.controller("loginPageController", function ($scope, $http) {
 app.controller("formPageController", function ($scope, formsPageService) {
     console.log("load2");
     $scope.forms = formsPageService.allForms();
+    $scope.patients = formsPageService.allPatients();
 });
 
 // RecordsPage controller
@@ -63,6 +64,8 @@ app.controller("recordsPageController", function ($scope) {
 app.factory("formsPageService", function () {
     // render titles/links to all available forms
     let forms = [{title: "form1", description: "This is the foot form."}, {title: "form2", description: "This is the back form."}, {title: "form3", description: "This is the neck form."}, {title: "form4", description: "This is the arm form."},];
+
+    let patients = [{name: "Dave Blanton", id: 1}, {name: "Ted Kay", id: 2}, {name: "Andy Jones", id: 3}, {name: "Jeb Bush", id: 4}, {name: "Pedro Martinez", id: 5}, ];
     //  is this where I need a listener/callback
     // $http({
     //     method: "GET",
@@ -78,7 +81,8 @@ app.factory("formsPageService", function () {
     //function: request all users from backend
     // render all users
     return{ 
-        allForms: function (){return forms;}
+        allForms: function (){return forms;},
+        allPatients: function(){return patients;},
     }
 
 });
