@@ -52,11 +52,16 @@ app.controller("formPageController", function ($scope, formsPageService) {
     console.log("load2");
     $scope.forms = formsPageService.allForms();
     $scope.patients = formsPageService.allPatients();
+    $scope.chosen = null;
+    $scope.getForm = function (){
+        console.log($scope.chosen);
+    }
 });
 
 // RecordsPage controller
-app.controller("recordsPageController", function ($scope) {
+app.controller("recordsPageController", function ($scope, recordsPageService) {
     console.log("load3");
+    $scope.records = recordsPageService.allRecords();
 });
 
 
@@ -66,6 +71,8 @@ app.factory("formsPageService", function () {
     let forms = [{title: "form1", description: "This is the foot form."}, {title: "form2", description: "This is the back form."}, {title: "form3", description: "This is the neck form."}, {title: "form4", description: "This is the arm form."},];
 
     let patients = [{name: "Dave Blanton", id: 1}, {name: "Ted Kay", id: 2}, {name: "Andy Jones", id: 3}, {name: "Jeb Bush", id: 4}, {name: "Pedro Martinez", id: 5}, ];
+
+
     //  is this where I need a listener/callback
     // $http({
     //     method: "GET",
@@ -83,6 +90,12 @@ app.factory("formsPageService", function () {
     return{ 
         allForms: function (){return forms;},
         allPatients: function(){return patients;},
+        getForms: function(){
+            for (let i = 0; i < forms.length; i++){
+
+            }
+
+        }
     }
 
 });
@@ -91,6 +104,8 @@ app.factory("formsPageService", function () {
 
 // RecordsPageService
 app.factory("recordsPageService", function () {
+    let records = [{formId: 1, patient: "Bill Murray", date: "11/24/2016", form: "a"}, {formId: 2, patientID: "Dame Edna", date: "10/24/2016",form: "a"}, {formId: 3, patientID: "Gilda Radner", date: "11/15/2016",form: "a"}, {formId: 1, patientID: "Bill Murray", date: "11/24/2016",form: "a"}, {formId: 1, patientID: "Bill Murray", date: "11/24/2016",form: "a"}, {formId: 1, patientID: "Bill Murray", date: "11/24/2016",form: "a"}, {formId: 1, patientID: "Bill Murray", date: "11/24/2016",form: "a"}]
+    
     // function: request all results from the backend
     // $http({
     //     method: "GET",
@@ -105,6 +120,9 @@ app.factory("recordsPageService", function () {
     // }
     // function: search through the backend for user results
     // render search results
+    return{
+        allRecords: function(){return records;},
+    }
 });
 
 

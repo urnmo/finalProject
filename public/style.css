@@ -1072,20 +1072,23 @@ header {
     color: #E8E8E8; }
 
 main {
-  max-width: 75rem;
-  margin-left: auto;
-  margin-right: auto;
   height: 600px;
   background: #F7F5E6; }
-  main::before, main::after {
-    content: ' ';
-    display: table; }
-  main::after {
-    clear: both; }
+  main #patientsForms {
+    max-width: 75rem;
+    margin-left: auto;
+    margin-right: auto; }
+    main #patientsForms::before, main #patientsForms::after {
+      content: ' ';
+      display: table; }
+    main #patientsForms::after {
+      clear: both; }
   main h2 {
     margin: 0% 2%;
     padding: 2% 0% 0% 0%;
     color: #333A56; }
+  main li {
+    list-style: none; }
   main #patients {
     width: 50%;
     float: left;
@@ -1100,6 +1103,15 @@ main {
     padding-right: 1.5625rem; }
     main #forms:last-child:not(:first-child) {
       float: right; }
+  main #getFormDiv {
+    max-width: 75rem;
+    margin-left: auto;
+    margin-right: auto; }
+    main #getFormDiv::before, main #getFormDiv::after {
+      content: ' ';
+      display: table; }
+    main #getFormDiv::after {
+      clear: both; }
 
 footer {
   background: #333A56;

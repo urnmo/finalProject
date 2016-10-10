@@ -43,7 +43,11 @@ input{
 };
 
 main {
+    
+    #patientsForms{
     @include grid-row();
+    }
+
     height: 600px;
     background: $color1;
         
@@ -53,6 +57,9 @@ main {
     color: $color2;
     }
 
+    li{
+    list-style: none;    }
+
     #patients{
         @include grid-column(6);
     }
@@ -60,6 +67,9 @@ main {
     #forms{
         @include grid-column(6);
     }
+#getFormDiv{
+    @include grid-row();
+}
 };
 
 footer {
