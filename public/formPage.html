@@ -5,8 +5,10 @@
         <div id="patients">
        <h2>Patients</h2>
         <ul class="medforms">
+            <h1>Hark! It's {{ chosenPatient }}</h1>
             <li ng-repeat="patient in patients">
-                <input type="radio" name="selectPatient" ng-model = "chosenPatient" value="patient.id"> <a href="" target="_blank" ui-sref="thePatient({ })">{{patient.name}}</a> <!--add property to identify form here and add link to form page-->
+                <input type="radio" name="selectPatient" ng-model="$parent.chosenPatient" value="{{ patient.id }}">
+                <label for="selectPatient"> {{patient.name}} </label> <!--add property to identify form here and add link to form page-->
                 <p class="patientDescriptor">Patient ID: {{patient.id}}</p>
             </li>
         </ul>
@@ -14,7 +16,9 @@
         <div id="forms">
          <h2>Forms</h2>
         <ul class="medforms">
-            <li ng-repeat="form in forms"><input type="checkbox" name="selectForm" ng-model="chosenForm" value="form.id"> <a href="" target="_blank" ui-sref="theForm({ })">{{form.title}}</a> <!--add property to identify form here and add link to form page-->
+            <li ng-repeat="form in forms">
+                <input type="radio" name="selectForm" ng-model="$parent.chosenForm" value="{{ form.title }}">
+                <label for="selectForm"> {{form.title}} </label><!--add property to identify form here and add link to form page-->
             <p class="formDescriptor">{{form.description}}</p>
             </li>
         </ul>

@@ -12,33 +12,12 @@
 </head>
 
 <body>
-    <snowflake></snowflake>
-    <header ng-controller="loginPageController">
-        <!--use ng-if toshow things conditionally based upon login status-->
-        <!--if not logged in this will show-->
-        <div ng-if="!loggedIn">
-            <!--$scope.loggedIn -->
-            <h2>Please log in</h2>
-            <input ng-model="username" placeholder="USERNAME" type="text">
-            <input ng-model="password" placeholder="PASSWORD" type="text">
-            <button id="loginBtn" ng-click="loginUser(username, password)">Login</button>
-        </div>
-
-        <div ng-if="loggedIn">
-            <!--$scope.loggedIn-->
-            <!--this will appear on all pages after login-->
-            <h3>Medical Form Fill Service</h3>
-            <nav>
-                <a ui-sref="forms">Forms</a>
-                <a ui-sref="records">Records</a>
-            </nav>
-        </div>
-    </header>
+     <header-page></header-page>
 
     <main>
         <ui-view></ui-view>
     </main>
-<icicle>
+
     <footer>
         <!--if logged in this will show-->
         <div ng-if="!loggedIn">

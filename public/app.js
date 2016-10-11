@@ -15,7 +15,11 @@ app.config(function ($stateProvider) {
         component: "recordsPage"
     })
 });
-
+//login page component
+app.component("headerPage",{
+    templateUrl: "headerPage.html",
+    controller: "headerPageController",
+});
 //forms page component
 app.component("formsPage", {
     templateUrl: "formPage.html",
@@ -27,23 +31,9 @@ app.component("recordsPage", {
     controller: "recordsPageController",
 });
 // Login page controller
-app.controller("loginPageController", function ($scope, $http) {
-    console.log("load1");
-     // need to take the value of ng-model=“username" ng-model="password" and push to a new object to send to backend
-    let user = {
-        username: null,
-        password: null,
-        valid: null,
-    };
-   
+app.controller("headerPageController", function ($scope, $http, headerPageService ) {
+    console.log("load1");    
     $scope.loggedIn = true;
-
-    $scope.loginUser = function (username, password) {
-        user.username = username;
-        user.password = password
-        console.log(user);
-        return user
-    };
 
 });
 
@@ -52,9 +42,13 @@ app.controller("formPageController", function ($scope, formsPageService) {
     console.log("load2");
     $scope.forms = formsPageService.allForms();
     $scope.patients = formsPageService.allPatients();
-    $scope.chosen = null;
+    $scope.chosenPatient = 'larry';
+    $scope.chosenForm = null;
     $scope.getForm = function (){
-        console.log($scope.chosen);
+        console.log("button pushed");
+        console.log($scope.chosenForm, $scope.chosenPatient);
+        formsPageService.getForm($scope.chosenForm, $scope.chosenPatient); //pass in parameters here?
+        console.log();
     }
 });
 
@@ -68,33 +62,33 @@ app.controller("recordsPageController", function ($scope, recordsPageService) {
 // FormsPageService
 app.factory("formsPageService", function () {
     // render titles/links to all available forms
-    let forms = [{title: "form1", description: "This is the foot form."}, {title: "form2", description: "This is the back form."}, {title: "form3", description: "This is the neck form."}, {title: "form4", description: "This is the arm form."},];
+    let forms = [{formId:1, title: "form1", description: "This is the foot form."}, {formId:2, title: "form2", description: "This is the back form."}, {formId:3, title: "form3", description: "This is the neck form."}, {formId:4, title: "form4", description: "This is the arm form."},];
 
     let patients = [{name: "Dave Blanton", id: 1}, {name: "Ted Kay", id: 2}, {name: "Andy Jones", id: 3}, {name: "Jeb Bush", id: 4}, {name: "Pedro Martinez", id: 5}, ];
 
-
-    //  is this where I need a listener/callback
-    // $http({
-    //     method: "GET",
-    //     url: "",
-    // }).then(function (response) {
-    //     angular.copy(response.data, allForms);
-    // });
-    // return {
-    //     getForms: function () {
-    //         return allForms;
-    //     }
-    // }
-    //function: request all users from backend
-    // render all users
+let patientView = {chosenPatient: null,
+                    chosenForm: null, };
     return{ 
         allForms: function (){return forms;},
         allPatients: function(){return patients;},
-        getForms: function(){
-            for (let i = 0; i < forms.length; i++){
+        getForm: function(chosenPatient, chosenForm){ 
+            console.log(chosenForm);
+            console.log(chosenPatient);
+            //pass in parameters here?
+            //search through all patients. if the current patient matches the value of the chosen patient, keep that value.
 
-            }
-
+    // $http({
+    //     method: "POST",
+    //     url: "",
+    // }).then(function (response) {
+    //     angular.copy(response.data, );
+    // });
+    // return {
+    //     getForms: function () {
+    //         return ;
+    //     }
+    // }
+    // function: request specific forms
         }
     }
 
@@ -124,7 +118,38 @@ app.factory("recordsPageService", function () {
         allRecords: function(){return records;},
     }
 });
+app.factory("headerPageService", function(){
+     // need to take the value of ng-model=“username" ng-model="password" and push to a new object to send to backend
+    let user = {
+        username: null,
+        password: null,
+        valid: null,
+    };
+   
+    //  is this where I need a listener/callback
+    // $http({
+    //     method: "GET",
+    //     url: "",
+    // }).then(function (response) {
+    //     angular.copy(response.data, loginUser);
+    // });
+    // return {
+    //     user: function () {
+    //         return user;
+    //     }
+    // }
 
+  return{
+    loginUser: function (username, password) {
+        user.username = username;
+        user.password = password
+        console.log(user);
+        return user
+        },
+    user: function(){return user},
+    };
+
+})
 
 
 
