@@ -20,6 +20,12 @@ app.config(function ($stateProvider) {
         url: "/theRecord",
         component: "theRecord"
     })
+
+    $stateProvider.state({
+        name: "formItself",
+        url: "/formItself",
+        component: "formItself"
+    })
 });
 
 //records component
@@ -57,6 +63,8 @@ app.component("formItself", {
 //formItselfController
 app.controller("formItselfController", function ($scope, $http, formItselfService) {
     console.log("load 4");
+    $scope.formItself = formItselfService.get();
+    $scope.booleanQ = true;
 });
 
 
@@ -224,9 +232,22 @@ app.factory("formItselfService", function () {
         ],
 
     };
+    //  is this where I need a listener/callback
+    // $http({
+    //     method: "POST",
+    //     url: "",
+    // }).then(function (response) {
+    //     angular.copy(response.data, getForm);
+    // });
+    // return {
+    //     form: function () {
+    //         return ;
+    //     }
+    // }
 
-
-
+    return {
+        get: function () { return formItself },
+    }
 
 
 

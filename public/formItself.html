@@ -1,0 +1,24 @@
+<section>
+    <p>{{formItself.patient.firstName}} {{formItself.patient.lastName}}</p>
+    <div id="questions">
+
+        <ul class="questionsOnForm">
+            <li ng-repeat="question in formItself.questions">
+                <h2 id="questionTitle">{{question.questionTitle}}</h2>
+                <div class="booleanQ" ng-if="booleanQ">
+                    <p class="questionText">{{question.question}}</p>
+                    <input type="checkbox" name="yes" ng-model="$parent.yes" value="true">
+                    <label for="yes">Yes</label>
+                    <input type="checkbox" name="no" ng-model="$parent.no" value="false">
+                    <label for="no">No</label>
+                </div>
+        
+        </ul>
+
+    </div>
+
+
+
+
+
+</section>
