@@ -5,7 +5,6 @@
         <div id="patients">
        <h2>Patients</h2>
         <ul class="medforms">
-            <h1>Hark! It's {{ chosenPatient }}</h1>
             <li ng-repeat="patient in patients">
                 <input type="radio" name="selectPatient" ng-model="$parent.chosenPatient" value="{{ patient.id }}">
                 <label for="selectPatient"> {{patient.name}} </label> <!--add property to identify form here and add link to form page-->
@@ -23,7 +22,7 @@
             </li>
         </ul>
         </div>
+        </section>
         <div id="getFormDiv">
         <button id="getForm" ng-click="getForm()">Get Form</button>
         </div>
-        </section>
