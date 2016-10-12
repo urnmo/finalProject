@@ -6,13 +6,20 @@
             <li ng-repeat="question in formItself.questions">
                 <h2 id="questionTitle">{{question.questionTitle}}</h2>
                 <div class="booleanQ" ng-if="booleanQ">
-                    <p class="questionText">{{question.question}}</p>
-                    <input type="checkbox" name="yes" ng-model="$parent.yes" value="true">
+                    <!--ng-if needs to an expression-->
+                    <p class="questionText">{{question.text}}</p>
+                    <input type="radio" name="yesNo" ng-model="question.answerValue" value="true">
                     <label for="yes">Yes</label>
-                    <input type="checkbox" name="no" ng-model="$parent.no" value="false">
+                    <input type="radio" name="yesNo" value="false" ng-model="question.answerValue">
                     <label for="no">No</label>
                 </div>
-        
+                <button ng-click="back()">BACK</button>
+                <button ng-click="next()">NEXT</button>
+            </li>
+                <button ng-click="submit()">SUBMIT</button>
+                <!--add ng-if here so it only shows on the last question question.final in form object-->
+
+
         </ul>
 
     </div>

@@ -102,7 +102,7 @@ app.factory("formsPageService", function () {
     // render titles/links to all available forms
     let forms = [{ formId: 1, title: "form1", description: "This is the foot form." }, { formId: 2, title: "form2", description: "This is the back form." }, { formId: 3, title: "form3", description: "This is the neck form." }, { formId: 4, title: "form4", description: "This is the arm form." },];
 
-    let patients = [{ name: "Dave Blanton", id: 1 }, { name: "Ted Kay", id: 2 }, { name: "Andy Jones", id: 3 }, { name: "Jeb Bush", id: 4 }, { name: "Pedro Martinez", id: 5 },];
+    let patients = [{ firstName: "Dave", lastName: "Blanton", patientId: 1 }, { firstName: "Ted", lastName: "Kay", patientId: 2 }, { firstName: "Andy", lastName: "Jones", patientId: 3 }, { firstName: "Jeb", lastName: "Bush", patientId: 4 }, { firstName: "Pedro", lastName: "Martinez", patientId: 5 },];
 
     let patientView = {
         chosenPatient: null,
@@ -158,11 +158,10 @@ app.factory("recordsPageService", function () {
     }
 });
 app.factory("headerPageService", function () {
-    // need to take the value of ng-model=“username" ng-model="password" and push to a new object to send to backend
+    // need to take the value of ng-model=“userfirstName" ng-model="password" and push to a new object to send to backend
     let user = {
         username: null,
         password: null,
-        valid: null,
     };
 
     //  is this where I need a listener/callback
@@ -200,33 +199,37 @@ app.factory("formItselfService", function () {
         },
         questions: [
             {
+                questionId: null,
                 questionTitle: "Pain1",
-                questiontype: "boolean",
-                question: "Are you experiencing pain today?",
+                questionType: "booleanQ",
+                text: "Are you experiencing pain today?",
                 answerValue: null,
             },
             {
+                questionId: null,
                 questionTitle: "Pain2",
-                questiontype: "scale1-10",
-                question: "Rate your pain on scale",
+                questionType: "scale1-10",
+                text: "Rate your pain on scale",
                 answerValue: null,
             },
             {
+                questionId: null,
                 questionTitle: "Pain3",
-                questiontype: "ifYesQuestions",
-                question: "Are you experiencing pain today? If 'yes', answer these questions.",
+                questionType: "ifYesQuestions",
+                text: "Are you experiencing pain today? If 'yes', answer these questions.",
                 answerValue: null,
             },
             {
+                questionId: null,
                 questionTitle: "Pain4",
-                questiontype: "ifYesRate",
-                question: "Are you experiencing pain today? If 'Yes, please rate it.",
+                questionType: "ifYesRate",
+                text: "Are you experiencing pain today? If 'Yes, please rate it.",
                 answerValue: null,
             },
             {
                 questionTitle: "Pain5",
-                questiontype: "checkBox",
-                question: "Choose answer that best fits your pain.",
+                questionType: "checkBox",
+                text: "Choose answer that best fits your pain.",
                 answerValue: null,
             },
         ],

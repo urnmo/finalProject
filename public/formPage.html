@@ -7,7 +7,7 @@
         <ul class="medforms">
             <li ng-repeat="patient in patients">
                 <input type="radio" name="selectPatient" ng-model="$parent.chosenPatient" value="{{ patient.id }}">
-                <label for="selectPatient"> {{patient.name}} </label> <!--add property to identify form here and add link to form page-->
+                <label for="selectPatient"> {{patient.firstName}} {{patient.lastName}} </label> <!--add property to identify form here and add link to form page-->
                 <p class="patientDescriptor">Patient ID: {{patient.id}}</p>
             </li>
         </ul>
