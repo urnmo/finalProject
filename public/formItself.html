@@ -1,11 +1,12 @@
 <section>
     <p>{{formItself.patient.firstName}} {{formItself.patient.lastName}}</p>
+                <h1> {{formItself.formName}} </h1>
     <div id="questions">
-
         <ul class="questionsOnForm">
             <li ng-repeat="question in formItself.questions">
-                <h2 id="questionTitle">{{question.questionTitle}}</h2>
-                <div class="booleanQ" ng-if="booleanQ">
+                <h2 id="questionTitle">{{question.title}}</h2>
+                
+                <div class="booleanQ" ng-if="question.type==='booleanQ'">
                     <!--ng-if needs to an expression-->
                     <p class="questionText">{{question.text}}</p>
                     <input type="radio" name="yesNo" ng-model="question.answerValue" value="true">
@@ -13,10 +14,10 @@
                     <input type="radio" name="yesNo" value="false" ng-model="question.answerValue">
                     <label for="no">No</label>
                 </div>
-                <button ng-click="back()">BACK</button>
-                <button ng-click="next()">NEXT</button>
+                <button ng-if="question.first===false" ng-click="back()">BACK</button>
+                <button ng-if="question.last===false" ng-click="next()">NEXT</button>
             </li>
-                <button ng-click="submit()">SUBMIT</button>
+                <button ng-click="submit()" ng-if="question.last===true">SUBMIT</button>
                 <!--add ng-if here so it only shows on the last question question.final in form object-->
 
 
