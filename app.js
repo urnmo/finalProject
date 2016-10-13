@@ -16,9 +16,9 @@ app.config(function ($stateProvider) {
     })
 
     $stateProvider.state({
-        name: "theRecord",
-        url: "/theRecord",
-        component: "theRecord"
+        name: "recordItself",
+        url: "/recordItself",
+        component: "recordItself"
     })
 
     $stateProvider.state({
@@ -29,9 +29,9 @@ app.config(function ($stateProvider) {
 });
 
 //records component
-app.component("theRecord", {
-    templateUrl: "theRecordItself.html",
-    controller: "theRecordItselfController",
+app.component("recordItself", {
+    templateUrl: "recordItself.html",
+    controller: "recordItselfController",
 });
 
 //login page component
@@ -58,7 +58,10 @@ app.component("formItself", {
 
 
 //recorditselfcontroller
-
+app.controller("recordItselfController", function ($scope, $http, recordItselfService) {
+    console.log('load5')
+    $scope.recordItself = recordItselfService.get();
+})
 
 //formItselfController
 app.controller("formItselfController", function ($scope, $http, formItselfService) {
@@ -213,21 +216,27 @@ app.factory("formItselfService", function () {
                 type: "scale1-10",
                 text: "Rate your pain on scale",
                 answerValue: null,
-                
+                first: false,
+                last: false,
+
             },
-            {
-                id: null,
-                title: "Pain3",
-                type: "ifYesQuestions",
-                text: "Are you experiencing pain today? If 'yes', answer these questions.",
-                answerValue: null,
-            },
+            // {
+            //     id: null,
+            //     title: "Pain3",
+            //     type: "ifYesQuestions",
+            //     text: "Are you experiencing pain today? If 'yes', answer these questions.",
+            //     answerValue: null,
+            //     first: false,
+            //     last: false,
+            // },
             {
                 id: null,
                 title: "Pain4",
                 type: "ifYesRate",
                 text: "Are you experiencing pain today? If 'Yes, please rate it.",
                 answerValue: null,
+                first: false,
+                last: false,
             },
             {
                 id: null,
@@ -235,6 +244,8 @@ app.factory("formItselfService", function () {
                 type: "checkBox",
                 text: "Choose answer that best fits your pain.",
                 answerValue: null,
+                first: false,
+                last: true,
             },
         ],
 
@@ -259,6 +270,51 @@ app.factory("formItselfService", function () {
 
 
 })
+
+app.factory("recordItselfService", function () {
+    let recordItself = {
+        formName: "Foot Form",
+        date: null,
+        patient: {
+            firstName: "Jeb",
+            lastName: "Gladys",
+        },
+        records: [
+            {
+                id: null,
+                title: "Pain1",
+                type: "booleanQ",
+                text: "Are you experiencing pain today?",
+                answerValue: "yes",
+            },
+            {
+                id: null,
+                title: "Pain2",
+                type: "scale1-10",
+                text: "Rate your pain on scale",
+                answerValue: "7",
+            },
+            {
+                id: null,
+                title: "Pain4",
+                type: "ifYesRate",
+                text: "Are you experiencing pain today? If 'Yes, please rate it.",
+                answerValue: "9",
+            },
+            {
+                id: null,
+                title: "Pain5",
+                type: "checkBox",
+                text: "Choose answer that best fits your pain.",
+                answerValue: '5',
+            },
+        ],
+    }
+    return{
+        get: function(){return recordItself},
+    }
+});
+
 
 
 

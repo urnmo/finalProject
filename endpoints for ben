@@ -1,0 +1,97 @@
+endpoints
+
+GET     /forms
+Returns summary of all the forms.
+
+Format:
+[{ 
+id: number,
+title: "string", 
+description: "string",
+}]
+
+GET /forms/{formId}/{patientId}
+Returns a specific form and associates it with a patient
+
+Format:
+[{
+    id: number,
+    name: "string",
+    date: number,
+    patient: {
+        firstName: "string",
+        lastName: "string",
+    },
+    questions: [
+        {
+            id: number,
+            title: "string",
+            type: "string",
+            text: "string",
+        }
+    ]
+}]
+
+GET     /patients
+Return summary of all the patients.
+
+Format:
+
+[{ 
+firstName: "string", 
+lastName: "string", 
+id: number }]
+
+GET /records/{formId}/{patientId}
+Returns summary of all the records per form.
+
+Format:
+
+[{ 
+    id: number, 
+    name: string,
+    date: "number",
+    patient: {
+        firstName: "string",
+        lastName: "string",
+    }
+}]
+
+GET /record/{recordId}
+Returns a specific record (form with answers).
+
+Format:
+[{
+    id: number,
+    name: "string",
+    date: number,
+    patient: {
+        firstName: "string",
+        lastName: "string",
+    },
+    questions: [
+        {
+            id: number,
+            title: "string",
+            type: "string",
+            text: "string",
+            answer: "string",
+        }
+    ]
+}]
+
+POST    /records/{formId}/{patientId}
+Submit answers for {formId} filled in by {patientId}.
+
+Format:
+
+[{
+    id: number,
+    questions: [
+            {
+                id: number,
+                answer: string,
+            }
+    ]
+}]
+
