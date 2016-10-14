@@ -12,11 +12,12 @@
             </li>
         </ul>
         </div>
+
         <div id="forms">
          <h2>Forms</h2>
         <ul class="medforms">
             <li ng-repeat="form in forms">
-                <input type="radio" name="selectForm" ng-model="$parent.chosenForm" value="{{ form.title }}">
+                <input type="radio" name="selectForm" ng-model="$parent.chosenForm" value="{{ form.id }}">
                 <label for="selectForm"> {{form.title}} </label><!--add property to identify form here and add link to form page-->
             <p class="formDescriptor">{{form.description}}</p>
             </li>

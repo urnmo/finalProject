@@ -2,10 +2,9 @@
     set up a ng-repeat for user results with description-->
         <div>
         <h2>Records</h2>
-        <ul ng-repeat="record in records" class="formRecords">
-            <li> <a ui-sref="({ })"> <!--add property here-->
-                </a>
-            <p class="recordDescriptor"><span>{{record.formId}}</span><span>{{record.patientId}}</span><span>{{record.form}}</span><span>{{record.date}}</span></p>
+        <ul >
+            <li ng-repeat="record in records" class="formRecords">  
+            <a ui-sref="recordItself({id:record.id})"><p class="recordDescriptor"><span>{{recordItself.date}}</span>  <span>{{record.id}}</span>  <span>{{record.name}}</span>  <span>{{record.date}}</span>  <span>{{record.patient.firstName}} </span>  <span>{{record.patient.lastName}} </span></p></a>
            </li>
         </ul>
         </div>

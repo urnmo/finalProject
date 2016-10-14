@@ -18,18 +18,7 @@
         <ui-view></ui-view>
     </main>
 
-    <footer>
-        <!--if logged in this will show-->
-        <div ng-if="!loggedIn">
-        </div>
-        <div ng-if="loggedIn">
-            <h2>Logged in as {{ username }}.</h2>
-            <!-- $scope.loggedIn -->
-            <!--<div ng-if="!loggedIn"></div>
-            <!-- $scope.loggedIn -->
-            <button id="logoutBtn" ng-click="logout(username)">Logout</button>
-        </div>
-    </footer>
-</body>
 
+</body>
+<footer-page></footer-page>
 </html>

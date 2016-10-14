@@ -1,0 +1,45 @@
+Form title: The Patient-Specific Functional Scale
+
+Question Title: "Initial Assessment"
+text: "I am going to ask you to identify up to three important activities that you are unable to do or are having difficulty
+with as a result of your _________________ problem.  Today, are there any activities that you are unable to do
+or having difficulty with because of your _________________ problem?"
+
+Question Title: "Activities"
+text: "Please name a specific activity that causes you pain. _______________"
+
+Question Title: "Activities"
+"text: Please rate your pain during this activity on the scale below."
+
+Question Title: "Activities"
+text: "Please name a specific activity that causes you pain. _______________"
+
+Question Title: "Activities"
+"text: Please rate your pain during this activity on the scale below."
+
+
+Form title: "PFDI-20"
+
+Question Title: "Instructions"
+text: "Please answer all the questions in the following survey. These questions
+will ask you if you have certain bladder, pelvic, or bowel symptoms and,
+if you do, how much they bother you. Answer these questions by choosing the
+appropriate number. While answering these questions, please consider your
+symptoms over the last 3 months. All items use the following format with
+a response scale from 0-4."
+
+Question Title: "Pelvic Organ Prolapse Distress Inventory 6 (POPDI-6)"
+text: "Do you usually experience pressure in the lower abdomen?"
+(rate 0-4)
+
+Question Title: "Colorectal-Anal Distress Inventory 9 (CRAD-8)"
+text: "Do you feel you need to strain too hard to have a bowel movement?"
+(rate 0-4)
+
+Question Title: "Urinary Distress Inventory 6 (UDI-6)"
+text: "Do you experience frequent urination?"
+(rate 0-4)
+
+Question Title: "Urinary Distress Inventory 6 (UDI-6)"
+text: "Do you usually experience difficulty emptying your bladder?"
+(rate 0-4)

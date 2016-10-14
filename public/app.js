@@ -17,7 +17,7 @@ app.config(function ($stateProvider) {
 
     $stateProvider.state({
         name: "recordItself",
-        url: "/recordItself",
+        url: "/recordItself/:id",
         component: "recordItself"
     })
 
@@ -39,6 +39,13 @@ app.component("headerPage", {
     templateUrl: "headerPage.html",
     controller: "headerPageController",
 });
+
+//footer page component
+app.component("footerPage", {
+    templateUrl: "footerPage.html",
+    controller: "footerPageController",
+});
+
 //forms page component
 app.component("formsPage", {
     templateUrl: "formPage.html",
@@ -58,9 +65,10 @@ app.component("formItself", {
 
 
 //recorditselfcontroller
-app.controller("recordItselfController", function ($scope, $http, recordItselfService) {
+app.controller("recordItselfController", function ($scope, $http, $stateParams,recordItselfService) {
     console.log('load5')
-    $scope.recordItself = recordItselfService.get();
+    $scope.recordItself = recordItselfService.get($stateParams.id);
+    console.log($stateParams.id);
 })
 
 //formItselfController
@@ -71,11 +79,16 @@ app.controller("formItselfController", function ($scope, $http, formItselfServic
 });
 
 
-// Login page controller
+// headerPage controller
 app.controller("headerPageController", function ($scope, $http, headerPageService) {
     console.log("load1");
     $scope.loggedIn = true;
+});
 
+// footerPage controller
+app.controller("footerPageController", function ($scope, $http, headerPageService) {
+    console.log("load1a");
+    $scope.loggedIn = true;
 });
 
 // FormsPage controller
@@ -83,7 +96,7 @@ app.controller("formPageController", function ($scope, formsPageService) {
     console.log("load2");
     $scope.forms = formsPageService.allForms();
     $scope.patients = formsPageService.allPatients();
-    $scope.chosenPatient = 'larry';
+    $scope.chosenPatient = 'null';
     $scope.chosenForm = null;
     $scope.getForm = function () {
         console.log("button pushed");
@@ -94,23 +107,20 @@ app.controller("formPageController", function ($scope, formsPageService) {
 });
 
 // RecordsPage controller
-app.controller("recordsPageController", function ($scope, recordsPageService) {
+app.controller("recordsPageController", function ($scope, recordsPageService, $stateParams) {
     console.log("load3");
     $scope.records = recordsPageService.allRecords();
+
 });
 
 
 // FormsPageService
 app.factory("formsPageService", function () {
     // render titles/links to all available forms
-    let forms = [{ formId: 1, title: "form1", description: "This is the foot form." }, { formId: 2, title: "form2", description: "This is the back form." }, { formId: 3, title: "form3", description: "This is the neck form." }, { formId: 4, title: "form4", description: "This is the arm form." },];
+    let forms = [{ id: 1, title: "form1", description: "This is the foot form." }, { id: 2, title: "form2", description: "This is the back form." }, { id: 3, title: "form3", description: "This is the neck form." }, { id: 4, title: "form4", description: "This is the arm form." },];
 
-    let patients = [{ firstName: "Dave", lastName: "Blanton", patientId: 1 }, { firstName: "Ted", lastName: "Kay", patientId: 2 }, { firstName: "Andy", lastName: "Jones", patientId: 3 }, { firstName: "Jeb", lastName: "Bush", patientId: 4 }, { firstName: "Pedro", lastName: "Martinez", patientId: 5 },];
+    let patients = [{ firstName: "Dave", lastName: "Blanton", id: 1 }, { firstName: "Ted", lastName: "Kay", id: 2 }, { firstName: "Andy", lastName: "Jones", id: 3 }, { firstName: "Jeb", lastName: "Bush", id: 4 }, { firstName: "Pedro", lastName: "Martinez", id: 5 },];
 
-    let patientView = {
-        chosenPatient: null,
-        chosenForm: null,
-    };
     return {
         allForms: function () { return forms; },
         allPatients: function () { return patients; },
@@ -140,7 +150,7 @@ app.factory("formsPageService", function () {
 
 // RecordsPageService
 app.factory("recordsPageService", function () {
-    let records = [{ formId: 1, patient: "Bill Murray", date: "11/24/2016", form: "a" }, { formId: 2, patientID: "Dame Edna", date: "10/24/2016", form: "a" }, { formId: 3, patientID: "Gilda Radner", date: "11/15/2016", form: "a" }, { formId: 1, patientID: "Bill Murray", date: "11/24/2016", form: "a" }, { formId: 1, patientID: "Bill Murray", date: "11/24/2016", form: "a" }, { formId: 1, patientID: "Bill Murray", date: "11/24/2016", form: "a" }, { formId: 1, patientID: "Bill Murray", date: "11/24/2016", form: "a" }]
+    let records = [{ id: 22324, name: "Foot Form", date: "11/24/2016", patient:{firstName:"Earl", lastName: "Scruggs"}}, ]
 
     // function: request all results from the backend
     // $http({
@@ -273,7 +283,8 @@ app.factory("formItselfService", function () {
 
 app.factory("recordItselfService", function () {
     let recordItself = {
-        formName: "Foot Form",
+        id: 12324,
+        name: "Foot Form",
         date: null,
         patient: {
             firstName: "Jeb",
