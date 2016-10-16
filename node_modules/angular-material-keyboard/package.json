@@ -1,0 +1,89 @@
+{
+  "author": {
+    "name": "David Enke",
+    "email": "postdavidenke.de"
+  },
+  "dependencies": {
+    "angular": "1.5.5",
+    "angular-animate": "1.5.5",
+    "angular-aria": "1.5.5",
+    "angular-material": "1.0.8",
+    "angular-messages": "1.5.5",
+    "angular-mocks": "1.5.5",
+    "angular-route": "1.5.5",
+    "angular-sanitize": "1.5.5",
+    "material-design-icons": "2.2.3"
+  },
+  "description": "Onscreen virtual keyboard for Angular (https://angularjs.org/) using Material (https://material.angularjs.org/)inspired by the Angular Virtual Keyboard by the-darc (https://github.com/the-darc/angular-virtual-keyboard).",
+  "devDependencies": {
+    "bower": "^1.7.7",
+    "conventional-changelog": "0.0.16",
+    "gulp": "^3.8.11",
+    "gulp-angular-embed-templates": "^2.1.2",
+    "gulp-clean-css": "^2.0.8",
+    "gulp-concat": "^2.5.2",
+    "gulp-footer": "^1.0.5",
+    "gulp-header": "^1.2.2",
+    "gulp-jshint": "^1.9.2",
+    "gulp-load-plugins": "^0.8.0",
+    "gulp-ng-annotate": "^2.0.0",
+    "gulp-replace": "^0.5.4",
+    "gulp-sass": "^2.2.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.1.0",
+    "jshint-stylish": "^1.0.0"
+  },
+  "directories": {},
+  "homepage": "https://github.com/davidenke/angular-material-keyboard",
+  "keywords": [
+    "Angular",
+    "Material",
+    "Angular Material Design",
+    "Onscreen",
+    "Keyboard",
+    "VKI",
+    "Virtual"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "davidenke",
+      "email": "post@davidenke.de"
+    }
+  ],
+  "name": "angular-material-keyboard",
+  "optionalDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidenke/angular-material-keyboard.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp build"
+  },
+  "version": "0.0.9",
+  "gitHead": "9365d06c6cb8ab2c5483a6e2e3649ea5bfe6ca77",
+  "bugs": {
+    "url": "https://github.com/davidenke/angular-material-keyboard/issues"
+  },
+  "_id": "angular-material-keyboard@0.0.9",
+  "_shasum": "e87940f85a1dd03e16df87f2d1c99404a30ca771",
+  "_from": "angular-material-keyboard@latest",
+  "_npmVersion": "2.15.8",
+  "_nodeVersion": "4.4.7",
+  "_npmUser": {
+    "name": "davidenke",
+    "email": "post@davidenke.de"
+  },
+  "dist": {
+    "shasum": "e87940f85a1dd03e16df87f2d1c99404a30ca771",
+    "tarball": "https://registry.npmjs.org/angular-material-keyboard/-/angular-material-keyboard-0.0.9.tgz"
+  },
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/angular-material-keyboard-0.0.9.tgz_1469798435358_0.6818249830976129"
+  },
+  "_resolved": "https://registry.npmjs.org/angular-material-keyboard/-/angular-material-keyboard-0.0.9.tgz",
+  "readme": "ERROR: No README data found!"
+}

@@ -1,0 +1,111 @@
+<html data-ng-app="keyboardDemoApp">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet"
+              href="//fonts.googleapis.com/css?family=Material+Icons|Open+Sans:400,300,600,700|Open+Sans+Condensed:300,700">
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.css">
+        <link rel="stylesheet" href="dist/mdKeyboard.min.css">
+    </head>
+    <body ng-cloak data-ng-controller="keyboardDemoCtrl">
+        <div layout-padding>
+            <h1 class="md-headline">Angular Material Keyboard Demo</h1>
+            <section layout="row">
+                <md-input-container flex>
+                    <label>Use default keyboard</label>
+                    <input type="text"
+                           class="md-input"
+                           ng-model="text"
+                           use-keyboard>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Use custom keyboard</label>
+                    <input type="number"
+                           class="md-input"
+                           ng-model="numbers"
+                           use-keyboard="Numbers">
+                </md-input-container>
+                <md-autocomplete flex
+                                 md-floating-label="Use md-autocomplete"
+                                 md-selected-item="selectedItem"
+                                 md-search-text="searchText"
+                                 md-items="item in [8, 16, 32, 64, 128, 256, 512, 1024] | filter:searchText"
+                                 md-item-text="item"
+                                 use-keyboard>
+                    <span md-highlight-text="searchText">{{item}}</span>
+                </md-autocomplete>
+            </section>
+            <section layout="row">
+                <md-input-container flex>
+                    <md-switch ng-model="keyboardVisible" ng-disabled="true">
+                        Keyboard
+                        <span ng-if="!keyboardVisible">hidden</span>
+                        <span ng-if="keyboardVisible">visible</span>
+                    </md-switch>
+                </md-input-container>
+                <md-input-container flex>
+                    <md-button class="md-raised"
+                               ng-click="hideKeyboard()"
+                               ng-disabled="!keyboardVisible">
+                        Hide keyboard
+                    </md-button>
+                </md-input-container>
+            </section>
+        </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js"></script>
+        <script src="dist/mdKeyboard.js"></script>
+
+        <script>
+            'use strict';
+
+            angular
+                .module('keyboardDemoApp', [
+                    'ngAnimate',
+                    'ngAria',
+                    'ngMaterial',
+                    'material.components.keyboard'
+                    //'ngMessages',
+                    //'ngSanitize',
+                ])
+                .config(function ($mdKeyboardProvider) {
+                    // add custom layout for numbers
+                    $mdKeyboardProvider.addLayout('Numbers', {
+                        'name': 'Numbers', 'keys': [
+                            [['7', '7'], ['8', '8'], ['9', '9'], ['Bksp', 'Bksp']],
+                            [['4', '4'], ['5', '5'], ['6', '6'], ['-', '-']],
+                            [['1', '1'], ['2', '2'], ['3', '3'], ['+', '+']],
+                            [['0', '0'], ['Spacer'], [','], ['Enter', 'Enter']]
+                        ], 'lang': ['de']
+                    });
+
+                    // default layout is german
+                    $mdKeyboardProvider.defaultLayout('Deutsch');
+                })
+                .controller('keyboardDemoCtrl', function ($log, $scope, $mdKeyboard) {
+                    $scope.text = '';
+                    $scope.numbers = '';
+                    $scope.keyboardVisible = $mdKeyboard.isVisible();
+
+                    $scope.hideKeyboard = function () {
+                        $mdKeyboard.hide();
+                    };
+
+                    $scope.$watch(
+                        function () {
+                            return $mdKeyboard.isVisible();
+                        },
+                        function (newValue) {
+                            $scope.keyboardVisible = newValue;
+                        }
+                    );
+                });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,247 @@
+angular
+    .module('material.components.keyboard')
+    .provider('$mdKeyboard', MdKeyboardProvider);
+
+function MdKeyboardProvider($$interimElementProvider,
+                            keyboardLayouts, keyboardDeadkey, keyboardSymbols, keyboardNumpad) {
+    // how fast we need to flick down to close the sheet, pixels/ms
+    var SCOPE;
+    var CLOSING_VELOCITY = 0.5;
+    var PADDING = 80; // same as css
+    var DEFAULT_LAYOUT = 'US International';
+    var CURRENT_LAYOUT = DEFAULT_LAYOUT;
+    var LAYOUTS = keyboardLayouts;
+    var DEADKEY = keyboardDeadkey;
+    var SYMBOLS = keyboardSymbols;
+    var NUMPAD = keyboardNumpad;
+    var VISIBLE = false;
+
+    var $mdKeyboard = $$interimElementProvider('$mdKeyboard')
+        .setDefaults({
+            methods: ['themable', 'disableParentScroll', 'clickOutsideToClose', 'layout'],
+            options: keyboardDefaults
+        })
+        .addMethod('getLayout', getLayout)
+        .addMethod('getCurrentLayout', getCurrentLayout)
+        .addMethod('getLayouts', getLayouts)
+        .addMethod('defaultLayout', defaultLayout)
+        .addMethod('useLayout', useLayout)
+        .addMethod('addLayout', addLayout)
+        .addMethod('isVisible', isVisible);
+
+    // should be available in provider (config phase) not only
+    // in service as defined in $$interimElementProvider
+    $mdKeyboard.getLayout = getLayout;
+    $mdKeyboard.getCurrentLayout = getCurrentLayout;
+    $mdKeyboard.getLayouts = getLayouts;
+    $mdKeyboard.defaultLayout = defaultLayout;
+    $mdKeyboard.useLayout = useLayout;
+    $mdKeyboard.addLayout = addLayout;
+    $mdKeyboard.isVisible = isVisible;
+
+    // get currently used layout object
+    function getCurrentLayout() {
+        return CURRENT_LAYOUT;
+    }
+
+    // get currently used layout object
+    function getLayout(layout) {
+        if (LAYOUTS[layout]) {
+            return LAYOUTS[layout];
+        }
+    }
+
+    // get names of available layouts
+    function getLayouts() {
+        var layouts = [];
+        angular.forEach(LAYOUTS, function (obj, layout) {
+            layouts.push(layout);
+        });
+        return layouts;
+    }
+
+    // set default layout
+    function defaultLayout(layout) {
+        if (LAYOUTS[layout]) {
+            DEFAULT_LAYOUT = layout;
+            CURRENT_LAYOUT = layout;
+        } else {
+            if (layout.length) {
+                var msg = "" +
+                    "The keyboard layout '" + layout + "' does not exists. \n" +
+                    "The default layout \"" + DEFAULT_LAYOUT + "\" will be used.\n" +
+                    "To get a list of the available layouts use 'showLayouts'.";
+                console.warn(msg);
+            }
+        }
+    }
+
+    // set name of layout to use
+    function useLayout(layout) {
+        if (layout && LAYOUTS[layout]) {
+            CURRENT_LAYOUT = layout;
+        } else {
+            CURRENT_LAYOUT = DEFAULT_LAYOUT;
+            if (layout.length) {
+                var msg = "" +
+                    "The keyboard layout '" + layout + "' does not exists. \n" +
+                    "The default layout \"" + DEFAULT_LAYOUT + "\" will be used.\n" +
+                    "To get a list of the available layouts use 'showLayouts'.";
+                console.warn(msg);
+            }
+        }
+        // broadcast new layout
+        if (SCOPE) {
+            SCOPE.$broadcast('$mdKeyboardLayoutChanged', CURRENT_LAYOUT);
+        }
+    }
+
+    // add a custom layout
+    function addLayout(layout, keys) {
+        if (!layout) return;
+        if (!LAYOUTS[layout]) {
+            LAYOUTS[layout] = keys;
+        } else {
+            var msg = "" +
+                "The keyboard layout '" + layout + "' already exists. \n" +
+                "Please use a different name.";
+            console.warn(msg);
+        }
+    }
+
+    // return if keyboard is visible
+    function isVisible() {
+        return VISIBLE;
+    }
+
+    return $mdKeyboard;
+
+    /* @ngInject */
+    function keyboardDefaults($window, $animate, $rootElement,
+                              $mdConstant, $mdUtil, $mdTheming, $mdKeyboard, $mdGesture) {
+
+        return {
+            onShow: onShow,
+            onRemove: onRemove,
+
+            themable: true,
+            disableParentScroll: true,
+            clickOutsideToClose: true,
+            layout: CURRENT_LAYOUT,
+            layouts: LAYOUTS,
+            deadkey: DEADKEY,
+            symbols: SYMBOLS,
+            numpad: NUMPAD
+        };
+
+        function onShow(scope, element, options) {
+
+            //if (options.clickOutsideToClose) {
+            //    document.body.on('click', function () {
+            //        $mdUtil.nextTick($mdKeyboard.cancel, true);
+            //    });
+            //}
+
+            var keyboard = new Keyboard(element, options.parent);
+            options.keyboard = keyboard;
+            options.parent.prepend(keyboard.element);
+
+            SCOPE = scope;
+            VISIBLE = true;
+
+            $mdTheming.inherit(keyboard.element, options.parent);
+
+            if (options.disableParentScroll) {
+                options.restoreScroll = $mdUtil.disableScrollAround(keyboard.element, options.parent);
+            }
+
+            return $animate
+                .enter(keyboard.element, options.parent)
+                .then(function () {
+                    if (options.escapeToClose) {
+                        options.rootElementKeyupCallback = function (e) {
+                            if (e.keyCode === $mdConstant.KEY_CODE.ESCAPE) {
+                                $mdUtil.nextTick($mdKeyboard.cancel, true);
+                            }
+                        };
+                        $rootElement.on('keyup', options.rootElementKeyupCallback);
+                    }
+                });
+
+        }
+
+        function onRemove(scope, element, options) {
+            var keyboard = options.keyboard;
+
+            return $animate
+                .leave(keyboard.element)
+                .then(function () {
+                    VISIBLE = false;
+
+                    if (options.disableParentScroll) {
+                        options.restoreScroll();
+                        delete options.restoreScroll;
+                    }
+
+                    keyboard.cleanup();
+                });
+        }
+
+        /**
+         * Keyboard class to apply keyboard behavior to an element
+         */
+        function Keyboard(element, parent) {
+            var deregister = $mdGesture.register(parent, 'drag', {horizontal: false});
+
+            element
+                .on('mousedown', onMouseDown);
+            parent
+                .on('$md.dragstart', onDragStart)
+                .on('$md.drag', onDrag)
+                .on('$md.dragend', onDragEnd);
+
+            return {
+                element: element,
+                cleanup: function cleanup() {
+                    deregister();
+                    parent.off('$md.dragstart', onDragStart);
+                    parent.off('$md.drag', onDrag);
+                    parent.off('$md.dragend', onDragEnd);
+                    parent.triggerHandler('focus');
+                }
+            };
+
+            function onMouseDown(ev) {
+                ev.preventDefault();
+            }
+
+            function onDragStart(ev) {
+                // Disable transitions on transform so that it feels fast
+                element.css($mdConstant.CSS.TRANSITION_DURATION, '0ms');
+            }
+
+            function onDrag(ev) {
+                var transform = ev.pointer.distanceY;
+                if (transform < 5) {
+                    // Slow down drag when trying to drag up, and stop after PADDING
+                    transform = Math.max(-PADDING, transform / 2);
+                }
+                element.css($mdConstant.CSS.TRANSFORM, 'translate3d(0,' + (PADDING + transform) + 'px,0)');
+            }
+
+            function onDragEnd(ev) {
+                if (ev.pointer.distanceY > 0 &&
+                    (ev.pointer.distanceY > 20 || Math.abs(ev.pointer.velocityY) > CLOSING_VELOCITY)) {
+                    var distanceRemaining = element.prop('offsetHeight') - ev.pointer.distanceY;
+                    var transitionDuration = Math.min(distanceRemaining / ev.pointer.velocityY * 0.75, 500);
+                    element.css($mdConstant.CSS.TRANSITION_DURATION, transitionDuration + 'ms');
+                    $mdUtil.nextTick($mdKeyboard.cancel, true);
+                    $window.document.activeElement.blur();
+                } else {
+                    element.css($mdConstant.CSS.TRANSITION_DURATION, '');
+                    element.css($mdConstant.CSS.TRANSFORM, '');
+                }
+            }
+        }
+    }
+}

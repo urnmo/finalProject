@@ -3,7 +3,7 @@
     <h1> {{formItself.formName}} </h1>
     <div id="questions">
         <ul class="questionsOnForm">
-            <li ng-repeat="question in formItself.questions">
+            <li ng-repeat="question in formItself.questions" >
                 <h2 id="questionTitle">{{question.title}}</h2>
 
                 <div class="booleanQ" ng-if="question.type==='booleanQ'">
@@ -13,9 +13,17 @@
                     <label for="yes">Yes</label>
                     <input type="radio" name="yesNo" value="false" ng-model="question.answerValue">
                     <label for="no">No</label>
-
-
                 </div>
+
+                <div class="fillIn" ng-if="question.type==='fillIn'">
+                    <!--ng-if needs to an expression-->
+                    <p class="questionText">{{question.text}}</p>
+                    <input type="text" use-keyboard="Deutsch" name="fillIn" ng-model="question.answerValue" value="true">
+                    <!--what should the ng-model be?-->
+                    <label for="yes">Fill in the blank</label>
+                   
+                </div>
+
                 <div class="scale1-10" ng-if="question.type==='scale1-10'">
                     <p class="questionText">{{question.text}}</p> <input type="radio" name="scale" ng-model="question.answerValue" value="true">
                     <label for="1">1</label>
@@ -34,9 +42,9 @@
                     <label for="9">9</label>
                     <input type="radio" name="scale" ng-model="question.answerValue" value="true">
                     <label for="10">10</label>
-
-
                 </div>
+
+
                 <div class="ifYesQuestions" ng-if="question.type==='ifYesQuestions'">
                     <p class="questionText">{{question.text}}</p>
                     <input type="radio" name="ifYes" ng-model="question.answerValue" value="true">
@@ -49,9 +57,9 @@
                     <label for="ifYesA">My pain makes lifting heavy things more difficult.</label>
                     <input type="radio" name="ifYesA" value="false" ng-model="question.answerValue">
                     <label for="ifYesA">My pain makes lifting things over 10lbs more difficult.</label>
-
-
                 </div>
+
+
                 <div class="ifYesRate" ng-if="question.type==='ifYesRate'">
                     <!--ng-if needs to an expression-->
                     <p class="questionText">{{question.text}}</p>
@@ -68,9 +76,9 @@
                     <label for="yes">3</label>
                     <input type="radio" name="yesNo2a" value="false" ng-model="question.answerValue">
                     <label for="no">4</label>
-
-
                 </div>
+
+
                 <div class="checkBox " ng-if="question.type==='checkBox'">
                     <!--ng-if needs to an expression-->
                     <p class="questionText">{{question.text}}</p>
@@ -82,14 +90,16 @@
                     <label for="yes">I've had worse.</label>
                     <input type="radio" name="checkBox " value="false" ng-model="question.answerValue">
                     <label for="no">Meh.</label>
-
                 </div>
+
+
                 <button ng-click="submit()" ng-if="question.last===true">SUBMIT</button>
-                <button ng-if="question.first===false" ng-click="back()">BACK</button>
+                <button ng-click="$state.go('question.id')">BACK</button>
                 <button ng-if="question.last===false" ng-click="next()">NEXT</button>
             </li>
             <!--add ng-if here so it only shows on the last question question.final in form object-->
-            <button ng-click="back()">BACK</button>
+
+
         </ul>
 
     </div>
