@@ -23,7 +23,7 @@ app.config(function ($stateProvider) {
 
     $stateProvider.state({
         name: "formItself",
-        url: "/formItself",
+        url: "/formItself/:qid",
         component: "formItself"
     })
 });
@@ -63,7 +63,6 @@ app.component("formItself", {
     controller: "formItselfController",
 });
 
-
 //recorditselfcontroller
 app.controller("recordItselfController", function ($scope, $http, $stateParams, recordItselfService) {
     console.log('load5')
@@ -72,10 +71,22 @@ app.controller("recordItselfController", function ($scope, $http, $stateParams, 
 })
 
 //formItselfController
-app.controller("formItselfController", function ($scope, $http, formItselfService) {
+app.controller("formItselfController", function ($scope, $http, $stateParams, formsPageService) {
     console.log("load 4");
-    $scope.formItself = formItselfService.get();
-    $scope.booleanQ = true;
+    $scope.chosenPatient = 'null';
+    $scope.chosenForm = null;
+    $scope.getForm = function () {
+        console.log("button pushed");
+        console.log($scope.chosenForm, $scope.chosenPatient);
+        formsPageService.getForm($scope.chosenForm, $scope.chosenPatient); //pass in parameters here?
+        
+        $state.go('formItself', { qid: 0 });
+    };
+    // get question #x and show it
+    $stateParams.qid;
+    // if its not the last question, show the next button
+    // if its not the first question, show the prev button
+    // show submit when its the last
 });
 
 
@@ -94,18 +105,11 @@ app.controller("footerPageController", function ($scope, $http, headerPageServic
 
 
 // FormsPage controller
-app.controller("formPageController", function ($scope, formsPageService) {
+app.controller("formPageController", function ($http, $scope, formsPageService, $state) {
     console.log("load2");
     $scope.forms = formsPageService.allForms();
     $scope.patients = formsPageService.allPatients();
-    $scope.chosenPatient = 'null';
-    $scope.chosenForm = null;
-    $scope.getForm = function () {
-        console.log("button pushed");
-        console.log($scope.chosenForm, $scope.chosenPatient);
-        formsPageService.getForm($scope.chosenForm, $scope.chosenPatient); //pass in parameters here?
-        console.log();
-    }
+
 });
 
 // RecordsPage controller
@@ -117,50 +121,59 @@ app.controller("recordsPageController", function ($scope, recordsPageService, $s
 
 
 // FormsPageService
-app.factory("formsPageService", function () {
+app.factory("formsPageService", function ($http) {
     // render titles/links to all available forms
     let forms = [{ id: 1, title: "form1", description: "This is the foot form." }, { id: 2, title: "form2", description: "This is the back form." }, { id: 3, title: "form3", description: "This is the neck form." }, { id: 4, title: "form4", description: "This is the arm form." },];
 
     let patients = [{ firstName: "Dave", lastName: "Blanton", id: 1 }, { firstName: "Ted", lastName: "Kay", id: 2 }, { firstName: "Andy", lastName: "Jones", id: 3 }, { firstName: "Jeb", lastName: "Bush", id: 4 }, { firstName: "Pedro", lastName: "Martinez", id: 5 },];
+    let formItself = {};
+    let fidPid = {
+        fid: null,
+        pid: null,
+    };
+    return {
+        allForms: function () {
+            $http({
+                method: "GET",
+                url: "https://radiant-brook-98763.herokuapp.com/forms"
+            }).then(function (response) {
+                angular.copy(response.data, forms);
+                console.log('getting data')
+            });
+            return forms;
+        },
 
-        return {
-            allForms: function () {
-                $http({
-                    method: "GET",
-                    url: "https://radiant-brook-98763.herokuapp.com/forms"
-                }).then(function (response) {
-                    angular.copy(response.data, forms);
-                });
-                return forms;
-            },
+        allPatients: function () {
+            $http({
+                method: "GET",
+                url: "https://radiant-brook-98763.herokuapp.com/users/15/patients"
+            }).then(function (response) {
+                angular.copy(response.data, patients);
+            })
+            return patients;
+        },
+        getForm: function () {
+            // console.log(chosenForm);
+            // console.log(chosenPatient);
+            //pass in parameters here?
+            //search through all patients. if the current patient matches the value of the chosen patient, keep that value.
+            // search through all patients. if the current patient matches the value of the chosen patient, keep that value.
+            $http({
+                method: "GET",
+                url: "https://radiant-brook-98763.herokuapp.com/forms" + "/" + chosenForm + "/" + chosenPatient,
+            }).then(function (response) {
+                angular.copy(response.data, formItself);
+                console.log(response);
+            });
+        },
+        target: function (chosenForm, chosenPatient) {
+            fid = chosenForm;
+            pid = chosenPatient;
+            return fidPid
+        },
+    }
 
-            allPatients: function () {
-                $http({
-                    method: "GET",
-                    url: "https://radiant-brook-98763.herokuapp.com/user/1/patients"
-                }).then(function (response) {
-                    angular.copy(response.data, patients);
-                })
-                return patients;
-            },
-            getForm: function (chosenPatient, chosenForm) {
-                console.log(chosenForm);
-                console.log(chosenPatient);
-                //pass in parameters here?
-                //search through all patients. if the current patient matches the value of the chosen patient, keep that value.
-                // search through all patients. if the current patient matches the value of the chosen patient, keep that value.
-                $http({
-                    method: "GET",
-                    url: "https://radiant-brook-98763.herokuapp.com/forms" + "/" + chosenForm + "/" + chosenPatient,
-                }).then(function (response) {
-                    angular.copy(response.data, formItself);
-                });
-            },
-            get: function () { return formItself },
-
-        }
-
-    });
+});
 // function: when form is clicked make a request to the backend for specific form and if it is a returning user populate user info. 
 // display selected form in a new window 
 
@@ -219,79 +232,79 @@ app.factory("headerPageService", function () {
 })
 
 app.factory("formItselfService", function () {
-    let formItself = {
-        formName: "Foot Form",
-        date: null,
-        patient: {
-            firstName: "Jeb",
-            lastName: "Gladys",
-        },
-        questions: [
-            {
-                id: null,
-                title: "Pain1",
-                type: "booleanQ",
-                text: "Are you experiencing pain today?",
-                answerValue: null,
-                first: true,
-                last: false,
-            },
-            {
-                id: null,
-                title: "Pain2",
-                type: "scale1-10",
-                text: "Rate your pain on scale",
-                answerValue: null,
-                first: false,
-                last: false,
+    // let formItself = {
+    //     formName: "Foot Form",
+    //     date: null,
+    //     patient: {
+    //         firstName: "Jeb",
+    //         lastName: "Gladys",
+    //     },
+    //     questions: [
+    //         {
+    //             id: null,
+    //             title: "Pain1",
+    //             type: "booleanQ",
+    //             text: "Are you experiencing pain today?",
+    //             answerValue: null,
+    //             first: true,
+    //             last: false,
+    //         },
+    //         {
+    //             id: null,
+    //             title: "Pain2",
+    //             type: "scale1-10",
+    //             text: "Rate your pain on scale",
+    //             answerValue: null,
+    //             first: false,
+    //             last: false,
 
-            },
-            {
-                id: null,
-                title: "Pain3",
-                type: "fillIn",
-                text: "Describe your pain today.",
-                answerValue: null,
-                first: false,
-                last: false,
-            },
-            {
-                id: null,
-                title: "Pain4",
-                type: "ifYesRate",
-                text: "Are you experiencing pain today? If 'Yes, please rate it.",
-                answerValue: null,
-                first: false,
-                last: false,
-            },
-            {
-                id: null,
-                title: "Pain5",
-                type: "checkBox",
-                text: "Choose answer that best fits your pain.",
-                answerValue: null,
-                first: false,
-                last: true,
-            },
-        ],
+    //         },
+    //         {
+    //             id: null,
+    //             title: "Pain3",
+    //             type: "fillIn",
+    //             text: "Describe your pain today.",
+    //             answerValue: null,
+    //             first: false,
+    //             last: false,
+    //         },
+    //         {
+    //             id: null,
+    //             title: "Pain4",
+    //             type: "ifYesRate",
+    //             text: "Are you experiencing pain today? If 'Yes, please rate it.",
+    //             answerValue: null,
+    //             first: false,
+    //             last: false,
+    //         },
+    //         {
+    //             id: null,
+    //             title: "Pain5",
+    //             type: "checkBox",
+    //             text: "Choose answer that best fits your pain.",
+    //             answerValue: null,
+    //             first: false,
+    //             last: true,
+    //         },
+    //     ],
 
-    };
-    //  is this where I need a listener/callback
-    // $http({
-    //     method: "POST",
-    //     url: "",
-    // }).then(function (response) {
-    //     angular.copy(response.data, getForm);
-    // });
+    // };
+    // //  is this where I need a listener/callback
+    // // $http({
+    // //     method: "POST",
+    // //     url: "",
+    // // }).then(function (response) {
+    // //     angular.copy(response.data, getForm);
+    // // });
+    // // return {
+    // //     form: function () {
+    // //         return ;
+    // //     }
+    // // }
+
     // return {
-    //     form: function () {
-    //         return ;
-    //     }
+    //     get: function () { return formItself },
     // }
-
-    return {
-        get: function () { return formItself },
-    }
 
 
 

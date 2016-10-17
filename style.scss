@@ -5,13 +5,13 @@
 @include foundation-global-styles;
 @include foundation-grid;
 
-
 $color1: #F7F5E6;
 $color2: #333A56;
 $color3: #52658F;
 $color4: #E8E8E8;
 
 $grid-column-gutter: 50px;
+
 
 
 * {font-family: 'Bitter', serif;
@@ -67,8 +67,21 @@ main {
     #forms{
         @include grid-column(6);
     }
-#getFormDiv{
+    #getFormDiv{
     @include grid-row();
+    button{
+    background-color: $color2;
+        border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center; 
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    margin: 0 auto;
+    border-radius: 8px;
+
+};;
 }
 };
 
