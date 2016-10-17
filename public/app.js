@@ -84,9 +84,6 @@ app.controller("formItselfController", function ($scope, $http, $stateParams, fo
     $scope.submit = function () {
 
     };
-
-
-
     // get question #x and show it
     $stateParams.qid;
     // if its not the last question, show the next button
@@ -106,15 +103,15 @@ app.controller("formPageController", function ($http, $scope, formsPageService, 
 });
 
 // Login page controller
-app.controller("headerPageController", function ($scope, $http, headerPageService) {
+app.controller("headerPageController", function ($scope, $http, headerPageService, loginService) {
     console.log("load1");
-    $scope.loggedIn = true;
+    $scope.loggedIn = false;
 });
 
 // footerPage controller
-app.controller("footerPageController", function ($scope, $http, headerPageService) {
+app.controller("footerPageController", function ($scope, $http, headerPageService, loginService) {
     console.log("load1a");
-    $scope.loggedIn = true;
+    $scope.loggedIn = false;
 });
 
 // RecordsPage controller
@@ -123,6 +120,10 @@ app.controller("recordsPageController", function ($scope, recordsPageService, $s
     $scope.records = recordsPageService.allRecords();
 
 });
+
+
+
+
 
 
 // FormsPageService
@@ -208,11 +209,12 @@ app.factory("recordsPageService", function () {
     //     allRecords: function () { return records; },
     // }
 });
-app.factory("headerPageService", function () {
+app.factory("loginService", function () {
     // need to take the value of ng-model=“userfirstName" ng-model="password" and push to a new object to send to backend
     let user = {
         username: null,
         password: null,
+        loggedIn: false,
     };
 
     //  is this where I need a listener/callback
@@ -229,10 +231,13 @@ app.factory("headerPageService", function () {
     // }
 
     return {
+
+
         loginUser: function (username, password) {
             user.username = username;
             user.password = password
             console.log(user);
+            user.loggedIn = true;
             return user
         },
         user: function () { return user },
