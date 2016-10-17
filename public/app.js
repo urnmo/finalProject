@@ -68,20 +68,25 @@ app.controller("recordItselfController", function ($scope, $http, $stateParams, 
     console.log('load5')
     $scope.recordItself = recordItselfService.get($stateParams.id);
     console.log($stateParams.id);
+
 })
 
 //formItselfController
 app.controller("formItselfController", function ($scope, $http, $stateParams, formsPageService) {
     console.log("load 4");
-    $scope.chosenPatient = 'null';
-    $scope.chosenForm = null;
-    $scope.getForm = function () {
-        console.log("button pushed");
-        console.log($scope.chosenForm, $scope.chosenPatient);
-        formsPageService.getForm($scope.chosenForm, $scope.chosenPatient); //pass in parameters here?
-        
-        $state.go('formItself', { qid: 0 });
+    $scope.form = formsPageService.getForm();
+    $scope.next = function () {
+        $state.go('formItself', { qid: $stateParams.qid + 1 });
     };
+    $scope.back = function () {
+        $state.go('formItself', { qid: $stateParams.qid - 1 });
+    };
+    $scope.submit = function () {
+
+    };
+
+
+
     // get question #x and show it
     $stateParams.qid;
     // if its not the last question, show the next button
@@ -89,6 +94,16 @@ app.controller("formItselfController", function ($scope, $http, $stateParams, fo
     // show submit when its the last
 });
 
+// FormsPage controller
+app.controller("formPageController", function ($http, $scope, formsPageService, $state) {
+    console.log("load2");
+    $scope.forms = formsPageService.allForms();
+    $scope.patients = formsPageService.allPatients();
+    $scope.target = function () {
+        formsPageService.target($scope.chosenForm, $scope.chosenPatient)
+        $state.go('formItself', { qid: 0 });
+    };
+});
 
 // Login page controller
 app.controller("headerPageController", function ($scope, $http, headerPageService) {
@@ -100,16 +115,6 @@ app.controller("headerPageController", function ($scope, $http, headerPageServic
 app.controller("footerPageController", function ($scope, $http, headerPageService) {
     console.log("load1a");
     $scope.loggedIn = true;
-});
-
-
-
-// FormsPage controller
-app.controller("formPageController", function ($http, $scope, formsPageService, $state) {
-    console.log("load2");
-    $scope.forms = formsPageService.allForms();
-    $scope.patients = formsPageService.allPatients();
-
 });
 
 // RecordsPage controller
@@ -146,31 +151,31 @@ app.factory("formsPageService", function ($http) {
         allPatients: function () {
             $http({
                 method: "GET",
-                url: "https://radiant-brook-98763.herokuapp.com/users/15/patients"
+                url: "https://radiant-brook-98763.herokuapp.com/patients"
             }).then(function (response) {
                 angular.copy(response.data, patients);
             })
             return patients;
         },
-        getForm: function () {
-            // console.log(chosenForm);
-            // console.log(chosenPatient);
-            //pass in parameters here?
-            //search through all patients. if the current patient matches the value of the chosen patient, keep that value.
-            // search through all patients. if the current patient matches the value of the chosen patient, keep that value.
-            $http({
-                method: "GET",
-                url: "https://radiant-brook-98763.herokuapp.com/forms" + "/" + chosenForm + "/" + chosenPatient,
-            }).then(function (response) {
-                angular.copy(response.data, formItself);
-                console.log(response);
-            });
-        },
+
         target: function (chosenForm, chosenPatient) {
             fid = chosenForm;
             pid = chosenPatient;
             return fidPid
         },
+
+        getForm: function () {
+            $http({
+                method: "GET",
+                url: "https://radiant-brook-98763.herokuapp.com/forms" + "/" + fid + "/" + pid,
+            }).then(function (response) {
+                angular.copy(response.data, formItself);
+                console.log(response);
+               
+            });
+             return formItself;
+        },
+
     }
 
 });
@@ -179,25 +184,29 @@ app.factory("formsPageService", function ($http) {
 
 // RecordsPageService
 app.factory("recordsPageService", function () {
-    let records = [{ id: 22324, name: "Foot Form", date: "11/24/2016", patient: { firstName: "Earl", lastName: "Scruggs" } },]
+    let records = [{ id: 22324, name: "Foot Form", date: "11/24/2016", patient: { firstName: "Earl", lastName: "Scruggs" } },];
 
     // function: request all results from the backend
-    // $http({
-    //     method: "GET",
-    //     url: "",
-    // }).then(function (response) {
-    //     angular.copy(response.data, allRecords);
-    // });
-    // return {
-    //     getRecords: function () {
-    //         return allRecords;
-    //     }
-    // }
+
+
+    return {
+        getRecords: function () {
+            $http({
+                method: "GET",
+                url: "",
+            }).then(function (response) {
+                angular.copy(response.data, records);
+            });
+            return records;
+
+        }
+
+    }
     // function: search through the backend for user results
     // render search results
-    return {
-        allRecords: function () { return records; },
-    }
+    // return {
+    //     allRecords: function () { return records; },
+    // }
 });
 app.factory("headerPageService", function () {
     // need to take the value of ng-model=“userfirstName" ng-model="password" and push to a new object to send to backend
