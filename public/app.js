@@ -1,26 +1,3 @@
-
-'use strict';
- 
-angular
-  .module('myApp')
-  .config(function ($mdKeyboardProvider) {
-  
-    // add layout for number fields 
-    $mdKeyboardProvider.addLayout('Numbers', {
-      'name': 'Numbers', 'keys': [
-            [['7', '7'], ['8', '8'], ['9', '9'], ['Bksp', 'Bksp']],
-            [['4', '4'], ['5', '5'], ['6', '6'], ['-', '-']],
-            [['1', '1'], ['2', '2'], ['3', '3'], ['+', '+']],
-            [['0', '0'], ['Spacer'], [','], ['Enter', 'Enter']]
-      ], 'lang': ['de']
-    });
- 
-    // default layout is german 
-    $mdKeyboardProvider.defaultLayout('Deutsch');
-  });
-
-
-
 let app = angular.module('MedFormsApp', ['ui.router']);
 
 //state provider & states
@@ -95,13 +72,14 @@ app.controller("recordItselfController", function ($scope, $http, $stateParams, 
 })
 
 //formItselfController
-app.controller("formItselfController", function ($scope, $http, formItselfService, formsPageService) {
+app.controller("formItselfController", function ($scope, $http, formItselfService) {
     console.log("load 4");
-    $scope.formItself = formsPageService.get();
+    $scope.formItself = formItselfService.get();
+    $scope.booleanQ = true;
 });
 
 
-// headerPage controller
+// Login page controller
 app.controller("headerPageController", function ($scope, $http, headerPageService) {
     console.log("load1");
     $scope.loggedIn = true;
@@ -112,6 +90,8 @@ app.controller("footerPageController", function ($scope, $http, headerPageServic
     console.log("load1a");
     $scope.loggedIn = true;
 });
+
+
 
 // FormsPage controller
 app.controller("formPageController", function ($scope, formsPageService) {
@@ -137,12 +117,109 @@ app.controller("recordsPageController", function ($scope, recordsPageService, $s
 
 
 // FormsPageService
-app.factory("formsPageService", function ($http) {
+app.factory("formsPageService", function () {
     // render titles/links to all available forms
     let forms = [{ id: 1, title: "form1", description: "This is the foot form." }, { id: 2, title: "form2", description: "This is the back form." }, { id: 3, title: "form3", description: "This is the neck form." }, { id: 4, title: "form4", description: "This is the arm form." },];
 
-    let patients = [{ firstName: "Dave", lastName: "Blanton", id: 1 }, { firstName: "Ted", lastName: "Kay", id: 2 }, { firstName: "Andy", lastName: "Jones", id: 3 }, { firstName: "Jeb", lastName: "Gladys", id: 4 }, { firstName: "Pedro", lastName: "Martinez", id: 5 },];
-let formItself = {
+    let patients = [{ firstName: "Dave", lastName: "Blanton", id: 1 }, { firstName: "Ted", lastName: "Kay", id: 2 }, { firstName: "Andy", lastName: "Jones", id: 3 }, { firstName: "Jeb", lastName: "Bush", id: 4 }, { firstName: "Pedro", lastName: "Martinez", id: 5 },];
+
+        return {
+            allForms: function () {
+                $http({
+                    method: "GET",
+                    url: "https://radiant-brook-98763.herokuapp.com/forms"
+                }).then(function (response) {
+                    angular.copy(response.data, forms);
+                });
+                return forms;
+            },
+
+            allPatients: function () {
+                $http({
+                    method: "GET",
+                    url: "https://radiant-brook-98763.herokuapp.com/user/1/patients"
+                }).then(function (response) {
+                    angular.copy(response.data, patients);
+                })
+                return patients;
+            },
+            getForm: function (chosenPatient, chosenForm) {
+                console.log(chosenForm);
+                console.log(chosenPatient);
+                //pass in parameters here?
+                //search through all patients. if the current patient matches the value of the chosen patient, keep that value.
+                // search through all patients. if the current patient matches the value of the chosen patient, keep that value.
+                $http({
+                    method: "GET",
+                    url: "https://radiant-brook-98763.herokuapp.com/forms" + "/" + chosenForm + "/" + chosenPatient,
+                }).then(function (response) {
+                    angular.copy(response.data, formItself);
+                });
+            },
+            get: function () { return formItself },
+
+        }
+
+    });
+// function: when form is clicked make a request to the backend for specific form and if it is a returning user populate user info. 
+// display selected form in a new window 
+
+// RecordsPageService
+app.factory("recordsPageService", function () {
+    let records = [{ id: 22324, name: "Foot Form", date: "11/24/2016", patient: { firstName: "Earl", lastName: "Scruggs" } },]
+
+    // function: request all results from the backend
+    // $http({
+    //     method: "GET",
+    //     url: "",
+    // }).then(function (response) {
+    //     angular.copy(response.data, allRecords);
+    // });
+    // return {
+    //     getRecords: function () {
+    //         return allRecords;
+    //     }
+    // }
+    // function: search through the backend for user results
+    // render search results
+    return {
+        allRecords: function () { return records; },
+    }
+});
+app.factory("headerPageService", function () {
+    // need to take the value of ng-model=“userfirstName" ng-model="password" and push to a new object to send to backend
+    let user = {
+        username: null,
+        password: null,
+    };
+
+    //  is this where I need a listener/callback
+    // $http({
+    //     method: "GET",
+    //     url: "",
+    // }).then(function (response) {
+    //     angular.copy(response.data, loginUser);
+    // });
+    // return {
+    //     user: function () {
+    //         return user;
+    //     }
+    // }
+
+    return {
+        loginUser: function (username, password) {
+            user.username = username;
+            user.password = password
+            console.log(user);
+            return user
+        },
+        user: function () { return user },
+    };
+
+})
+
+app.factory("formItselfService", function () {
+    let formItself = {
         formName: "Foot Form",
         date: null,
         patient: {
@@ -199,107 +276,28 @@ let formItself = {
         ],
 
     };
-    return {
-        allForms: function () {
-            $http({
-                method: "GET",
-                url: "https://radiant-brook-98763.herokuapp.com/forms"
-            }).then(function (response) {
-                angular.copy(response.data, forms);
-            });
-            return forms;
-        },
-
-
-        allPatients: function () {
-            $http({
-                method: "GET",
-                url: "https://radiant-brook-98763.herokuapp.com/user/1/patients"
-            }).then(function (response) {
-                angular.copy(response.data, patients);
-            })
-            return patients;
-        },
-        getForm: function (chosenPatient, chosenForm) {
-            console.log(chosenForm);
-            console.log(chosenPatient);
-            // pass in parameters here?
-            // search through all patients. if the current patient matches the value of the chosen patient, keep that value.
-            $http({
-                method: "GET",
-                url: "https://radiant-brook-98763.herokuapp.com/forms" + "/" + chosenForm + "/" + chosenPatient,
-            }).then(function (response) {
-                angular.copy(response.data, formItself);
-            });
-        },
-        get: function () { return formItself },
-    }
-})
-// function: when form is clicked make a request to the backend for specific form and if it is a returning user populate user info. 
-// display selected form in a new window 
-
-// RecordsPageService
-app.factory("recordsPageService", function ($http) {
-    let records = [{ id: 22324, name: "Foot Form", date: "11/24/2016", patient: { firstName: "Earl", lastName: "Scruggs" } },]
-
-    // function: request all results from the backend
-    // $http({
-    //     method: "GET",
-    //     url: "",
-    // }).then(function (response) {
-    //     angular.copy(response.data, allRecords);
-    // });
-    // return {
-    //     getRecords: function () {
-    //         return allRecords;
-    //     }
-    // }
-    // function: search through the backend for user results
-    // render search results
-    return {
-        allRecords: function () { return records; },
-    }
-});
-app.factory("headerPageService", function ($http) {
-    // need to take the value of ng-model=“userfirstName" ng-model="password" and push to a new object to send to backend
-    let user = {
-        username: null,
-        password: null,
-    };
-
     //  is this where I need a listener/callback
     // $http({
-    //     method: "GET",
+    //     method: "POST",
     //     url: "",
     // }).then(function (response) {
-    //     angular.copy(response.data, loginUser);
+    //     angular.copy(response.data, getForm);
     // });
     // return {
-    //     user: function () {
-    //         return user;
+    //     form: function () {
+    //         return ;
     //     }
     // }
 
     return {
-        loginUser: function (username, password) {
-            user.username = username;
-            user.password = password
-            console.log(user);
-            return user
-        },
-        user: function () { return user },
-    };
+        get: function () { return formItself },
+    }
+
+
 
 })
 
-app.factory("formItselfService", function ($http) {
-    
-    return {
-
-    }
-});
-
-app.factory("recordItselfService", function ($http) {
+app.factory("recordItselfService", function () {
     let recordItself = {
         id: 12324,
         name: "Foot Form",

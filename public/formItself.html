@@ -18,8 +18,8 @@
                 <div class="fillIn" ng-if="question.type==='fillIn'">
                     <!--ng-if needs to an expression-->
                     <p class="questionText">{{question.text}}</p>
-                    <input type="text" use-keyboard="Deutsch" name="fillIn" ng-model="question.answerValue" value="true">
-                    <!--what should the ng-model be?-->
+                    <input type="text" name="fillIn" ng-model="question.answerValue" value="true">
+                    <!--what should the ng-model be use-keyboard="Deutsch"?-->
                     <label for="yes">Fill in the blank</label>
                    
                 </div>
@@ -94,7 +94,7 @@
 
 
                 <button ng-click="submit()" ng-if="question.last===true">SUBMIT</button>
-                <button ng-click="$state.go('question.id')">BACK</button>
+                <button ng-click="$state.go('question.id')" ng-if="question.first===false" >BACK</button>
                 <button ng-if="question.last===false" ng-click="next()">NEXT</button>
             </li>
             <!--add ng-if here so it only shows on the last question question.final in form object-->
