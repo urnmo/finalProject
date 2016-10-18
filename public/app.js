@@ -75,6 +75,7 @@ app.controller("recordItselfController", function ($scope, $http, $stateParams, 
 app.controller("formItselfController", function ($scope, $http, $stateParams, formsPageService) {
     console.log("load 4");
     $scope.form = formsPageService.getForm();
+
     $scope.next = function () {
         $state.go('formItself', { qid: $stateParams.qid + 1 });
     };

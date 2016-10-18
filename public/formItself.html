@@ -92,10 +92,10 @@
                     <label for="no">Meh.</label>
                 </div>
 
-<!---->
-                <button ng-if="question.last===true" ng-click="submit()" >SUBMIT</button>
-                <button ng-if="question.first===false" ng-click="back()" >BACK</button>
-                <button ng-if="question.last===false" ng-click="next()">NEXT</button>
+<!-- -->
+                <button ng-if="$last" ng-click="submit()" >SUBMIT</button>
+                <button ng-if="!$first" ng-click="back()" >BACK</button>
+                <button ng-if="!$last" ng-click="next()">NEXT</button>
             </li>
             <!--add ng-if here so it only shows on the last question question.final in form object-->
 
