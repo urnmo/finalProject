@@ -43,12 +43,11 @@ input{
 };
 
 main {
-    
+
     #patientsForms{
     @include grid-row();
     }
 
-    height: 600px;
     background: $color1;
         
     h2{
@@ -62,11 +61,13 @@ main {
 
     #patients{
         @include grid-column(6);
+        
     }
 
     #forms{
         @include grid-column(6);
     }
+
     #getFormDiv{
     @include grid-row();
     button{
@@ -81,9 +82,12 @@ main {
     margin: 0 auto;
     border-radius: 8px;
 
-};;
+};
 }
 };
+
+
+
 
 footer {
     background: $color2;

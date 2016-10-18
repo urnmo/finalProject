@@ -68,26 +68,30 @@ app.controller("recordItselfController", function ($scope, $http, $stateParams, 
     console.log('load5')
     $scope.recordItself = recordItselfService.get($stateParams.id);
     console.log($stateParams.id);
-
 })
 
 //formItselfController
 app.controller("formItselfController", function ($scope, $http, $stateParams, formsPageService, $state) {
-    console.log("load 4");
+    console.log("load 4x");
     $scope.form = formsPageService.getForm();
     $scope.qid = parseInt($stateParams.qid)
+    
     $scope.next = function () {
         $state.go('formItself', { qid: parseInt($stateParams.qid) + 1 });
     };
-   
     $scope.back = function () {
         $state.go('formItself', { qid: parseInt($stateParams.qid) - 1 });
     };
-   
+
     $scope.submit = function () {
+        // route to login page
+        // post answers to backend
+       formsPageService.submit();
+        console.log("pushed that shit")
+        $state.go()
     };
     // get question #x and show it
-    $stateParams.qid;
+    // $stateParams.qid;
     // if its not the last question, show the next button
     // if its not the first question, show the prev button
     // show submit when its the last
@@ -107,6 +111,7 @@ app.controller("formPageController", function ($http, $scope, formsPageService, 
 // Login page controller
 app.controller("headerPageController", function ($scope, $http, loginService) {
     console.log("load1");
+
     $scope.loggedIn = true;
 });
 
@@ -129,11 +134,13 @@ app.factory("formsPageService", function ($http) {
     let forms = [{ id: 1, title: "form1", description: "This is the foot form." }, { id: 2, title: "form2", description: "This is the back form." }, { id: 3, title: "form3", description: "This is the neck form." }, { id: 4, title: "form4", description: "This is the arm form." },];
 
     let patients = [{ firstName: "Dave", lastName: "Blanton", id: 1 }, { firstName: "Ted", lastName: "Kay", id: 2 }, { firstName: "Andy", lastName: "Jones", id: 3 }, { firstName: "Jeb", lastName: "Bush", id: 4 }, { firstName: "Pedro", lastName: "Martinez", id: 5 },];
-    let formItself = {};
+    let formItself = null;
     let fidPid = {
         fid: null,
         pid: null,
     };
+    
+
     return {
         allForms: function () {
             $http({
@@ -163,17 +170,39 @@ app.factory("formsPageService", function ($http) {
         },
 
         getForm: function () {
+            console.log("you runnin boss")
+            if (formItself === null) {
+                formItself = {};
+
             $http({
                 method: "GET",
                 url: "https://radiant-brook-98763.herokuapp.com/forms" + "/" + fid + "/" + pid,
             }).then(function (response) {
                 angular.copy(response.data, formItself);
                 console.log(response);
-               
-            });
-             return formItself;
-        },
 
+            });
+            }
+
+            console.log(formItself); 
+
+            return formItself;
+        },
+            submit: function (){
+                console.log(formItself);
+                let answers = [];
+                for (let question of formItself.form.questions) {
+                    answers.push(question.answer);
+                }
+                console.log(answers);
+                // angular.copy(formItself, answers); // issue
+
+                $http({
+                    method: "POST",
+                    url: "https://radiant-brook-98763.herokuapp.com/records/" + fid + "/" + pid,
+                    data: answers,
+                })
+            }
     }
 
 });
@@ -189,12 +218,14 @@ app.factory("recordsPageService", function ($http) {
 
     return {
         getRecords: function () {
+            console.log("ahoy hoy"),
             $http({
                 method: "GET",
-                url: "https://radiant-brook-98763.herokuapp.com/user/1/records",
+                url: "https://radiant-brook-98763.herokuapp.com/records",
             }).then(function (response) {
                 angular.copy(response.data, records);
             });
+            console.log(records);
             return records;
 
         }
@@ -206,6 +237,7 @@ app.factory("recordsPageService", function ($http) {
     //     allRecords: function () { return records; },
     // }
 });
+
 app.factory("loginService", function () {
     // need to take the value of ng-model=“userfirstName" ng-model="password" and push to a new object to send to backend
     let user = {
@@ -229,10 +261,13 @@ app.factory("loginService", function () {
 
     return {
 
+        logout: function () {
+            user.loggedIn = false;
+        },
 
         loginUser: function (username, password) {
             user.username = username;
-            user.password = password
+            user.password = password;
             console.log(user);
             user.loggedIn = true;
             return user
@@ -240,10 +275,10 @@ app.factory("loginService", function () {
         user: function () { return user },
     };
 
+
 })
 
 app.factory("formItselfService", function () {
-  
 })
 
 app.factory("recordItselfService", function () {
