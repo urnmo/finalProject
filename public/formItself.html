@@ -3,7 +3,7 @@
     <h1> {{form.form.name}} </h1>
     <div id="questions">
         <ul class="questionsOnForm">
-            <li ng-repeat="question in form.form.questions" >
+            <li ng-repeat="question in form.form.questions" ng-if="$index===qid" >
                 <h2 id="questionTitle">{{question.title}}</h2>
 
                 <div class="booleanQ" ng-if="question.type==='booleanQ'">

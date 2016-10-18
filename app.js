@@ -72,18 +72,19 @@ app.controller("recordItselfController", function ($scope, $http, $stateParams, 
 })
 
 //formItselfController
-app.controller("formItselfController", function ($scope, $http, $stateParams, formsPageService) {
+app.controller("formItselfController", function ($scope, $http, $stateParams, formsPageService, $state) {
     console.log("load 4");
     $scope.form = formsPageService.getForm();
-
+    $scope.qid = parseInt($stateParams.qid)
     $scope.next = function () {
-        $state.go('formItself', { qid: $stateParams.qid + 1 });
+        $state.go('formItself', { qid: parseInt($stateParams.qid) + 1 });
     };
+   
     $scope.back = function () {
-        $state.go('formItself', { qid: $stateParams.qid - 1 });
+        $state.go('formItself', { qid: parseInt($stateParams.qid) - 1 });
     };
+   
     $scope.submit = function () {
-
     };
     // get question #x and show it
     $stateParams.qid;
@@ -242,82 +243,7 @@ app.factory("loginService", function () {
 })
 
 app.factory("formItselfService", function () {
-    // let formItself = {
-    //     formName: "Foot Form",
-    //     date: null,
-    //     patient: {
-    //         firstName: "Jeb",
-    //         lastName: "Gladys",
-    //     },
-    //     questions: [
-    //         {
-    //             id: null,
-    //             title: "Pain1",
-    //             type: "booleanQ",
-    //             text: "Are you experiencing pain today?",
-    //             answerValue: null,
-    //             first: true,
-    //             last: false,
-    //         },
-    //         {
-    //             id: null,
-    //             title: "Pain2",
-    //             type: "scale1-10",
-    //             text: "Rate your pain on scale",
-    //             answerValue: null,
-    //             first: false,
-    //             last: false,
-
-    //         },
-    //         {
-    //             id: null,
-    //             title: "Pain3",
-    //             type: "fillIn",
-    //             text: "Describe your pain today.",
-    //             answerValue: null,
-    //             first: false,
-    //             last: false,
-    //         },
-    //         {
-    //             id: null,
-    //             title: "Pain4",
-    //             type: "ifYesRate",
-    //             text: "Are you experiencing pain today? If 'Yes, please rate it.",
-    //             answerValue: null,
-    //             first: false,
-    //             last: false,
-    //         },
-    //         {
-    //             id: null,
-    //             title: "Pain5",
-    //             type: "checkBox",
-    //             text: "Choose answer that best fits your pain.",
-    //             answerValue: null,
-    //             first: false,
-    //             last: true,
-    //         },
-    //     ],
-
-    // };
-    // //  is this where I need a listener/callback
-    // // $http({
-    // //     method: "POST",
-    // //     url: "",
-    // // }).then(function (response) {
-    // //     angular.copy(response.data, getForm);
-    // // });
-    // // return {
-    // //     form: function () {
-    // //         return ;
-    // //     }
-    // // }
-
-    // return {
-    //     get: function () { return formItself },
-    // }
-
-
-
+  
 })
 
 app.factory("recordItselfService", function () {
