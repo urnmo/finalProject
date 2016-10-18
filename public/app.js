@@ -103,28 +103,23 @@ app.controller("formPageController", function ($http, $scope, formsPageService, 
 });
 
 // Login page controller
-app.controller("headerPageController", function ($scope, $http, headerPageService, loginService) {
+app.controller("headerPageController", function ($scope, $http, loginService) {
     console.log("load1");
-    $scope.loggedIn = false;
+    $scope.loggedIn = true;
 });
 
 // footerPage controller
-app.controller("footerPageController", function ($scope, $http, headerPageService, loginService) {
+app.controller("footerPageController", function ($scope, $http, loginService) {
     console.log("load1a");
-    $scope.loggedIn = false;
+    $scope.loggedIn = true;
 });
 
 // RecordsPage controller
 app.controller("recordsPageController", function ($scope, recordsPageService, $stateParams) {
     console.log("load3");
-    $scope.records = recordsPageService.allRecords();
+    $scope.records = recordsPageService.getRecords();
 
 });
-
-
-
-
-
 
 // FormsPageService
 app.factory("formsPageService", function ($http) {
@@ -184,7 +179,7 @@ app.factory("formsPageService", function ($http) {
 // display selected form in a new window 
 
 // RecordsPageService
-app.factory("recordsPageService", function () {
+app.factory("recordsPageService", function ($http) {
     let records = [{ id: 22324, name: "Foot Form", date: "11/24/2016", patient: { firstName: "Earl", lastName: "Scruggs" } },];
 
     // function: request all results from the backend
@@ -194,7 +189,7 @@ app.factory("recordsPageService", function () {
         getRecords: function () {
             $http({
                 method: "GET",
-                url: "",
+                url: "https://radiant-brook-98763.herokuapp.com/user/1/records",
             }).then(function (response) {
                 angular.copy(response.data, records);
             });

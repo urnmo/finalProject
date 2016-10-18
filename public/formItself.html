@@ -6,8 +6,8 @@
             <li ng-repeat="question in form.form.questions" >
                 <h2 id="questionTitle">{{question.title}}</h2>
 
-                <div class="booleanQ">
-                    <!--ng-if needs to an expression ng-if="question.type==='booleanQ'"-->
+                <div class="booleanQ" ng-if="question.type==='booleanQ'">
+                    <!--ng-if needs to an expression -->
                     <p class="questionText">{{question.text}}</p>
                     <input type="radio" name="yesNo" ng-model="question.answerValue" value="true">
                     <label for="yes">Yes</label>
@@ -15,8 +15,8 @@
                     <label for="no">No</label>
                 </div>
 
-                <div class="fillIn">
-                    <!--ng-if needs to an expression ng-if="question.type==='fillIn'"-->
+                <div class="fillIn" ng-if="question.type==='fillIn'">
+                    <!--ng-if needs to an expression -->
                     <p class="questionText">{{question.text}}</p>
                     <input type="text" name="fillIn" ng-model="question.answerValue" value="true">
                     <!--what should the ng-model be use-keyboard="Deutsch"?-->
@@ -24,7 +24,7 @@
                    
                 </div>
 <!--ng-if="question.type==='scale1-10'"-->
-                <div class="scale1-10">
+                <div class="scale1-10" ng-if="question.type==='scale1-10'">
                     <p class="questionText">{{question.text}}</p> <input type="radio" name="scale" ng-model="question.answerValue" value="true">
                     <label for="1">1</label>
                     <input type="radio" name="scale" ng-model="question.answerValue" value="true">
@@ -44,10 +44,10 @@
                     <label for="10">10</label>
                 </div>
 
-<!--ng-if="question.type==='ifYesQuestions'"-->
-                <div class="ifYesQuestions" >
+<!---->
+                <div class="ifYesQuestions" ng-if="question.type==='ifYesQuestions'" >
                     <p class="questionText">{{question.text}}</p>
-                    <input type="radio" name="ifYes" ng-model="question.answerValue" value="true">
+                    <input type="radio"  name="ifYes" ng-model="question.answerValue" value="true">
                     <label for="yes">No</label>
                     <input type="radio" name="ifYes" value="false" ng-model="question.answerValue">
                     <label for="no">Yes</label>
@@ -59,8 +59,8 @@
                     <label for="ifYesA">My pain makes lifting things over 10lbs more difficult.</label>
                 </div>
 
- <!--ng-if="question.type==='ifYesRate'"-->
-                <div class="ifYesRate">
+ <!---->
+                <div class="ifYesRate" ng-if="question.type==='ifYesRate'">
                     <!--ng-if needs to an expression-->
                     <p class="questionText">{{question.text}}</p>
                     <input type="radio" name="yesNo2" ng-model="question.answerValue" value="true">
@@ -78,11 +78,11 @@
                     <label for="no">4</label>
                 </div>
 
-<!--ng-if="question.type==='checkBox'"-->
-                <div class="checkBox ">
+<!---->
+                <div class="checkBox" ng-if="question.type==='checkBox'">
                     <!--ng-if needs to an expression-->
                     <p class="questionText">{{question.text}}</p>
-                    <input type="radio" name="checkBox" ng-model="question.answerValue" value="true">
+                    <input type="radio"  name="checkBox" ng-model="question.answerValue" value="true">
                     <label for="yes">Face-melting pain.</label>
                     <input type="radio" name="checkBox " value="false" ng-model="question.answerValue">
                     <label for="no">Dear god, this is horrible.</label>
@@ -92,15 +92,15 @@
                     <label for="no">Meh.</label>
                 </div>
 
-<!--ng-if="question.last===true"-->
-                <button ng-click="submit()" >SUBMIT</button>
-                <button ng-click="back()" >BACK</button>
-                <button ng-click="next()">NEXT</button>
+<!---->
+                <button ng-if="question.last===true" ng-click="submit()" >SUBMIT</button>
+                <button ng-if="question.first===false" ng-click="back()" >BACK</button>
+                <button ng-if="question.last===false" ng-click="next()">NEXT</button>
             </li>
             <!--add ng-if here so it only shows on the last question question.final in form object-->
 
-<!--ng-if="question.first===false"-->
-<!--ng-if="question.last===false" -->
+<!---->
+<!-- -->
         </ul>
 
     </div>
