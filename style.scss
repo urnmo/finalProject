@@ -10,8 +10,7 @@ $color2: #333A56;
 $color3: #52658F;
 $color4: #E8E8E8;
 
-$grid-column-gutter: 50px;
-
+// $grid-column-gutter: 50px;
 
 
 * {font-family: 'Bitter', serif;
@@ -21,18 +20,19 @@ header {
     background: $color3;
     height: 100px;
 h2{
-    margin: 0% 2%;
-    padding: 2% 0% 0% 0%;
+    margin: 2% 2% 0% 2%;
+    padding: 1% 0% 0% 2%;
     color: $color4;
 }
 h3{
-    margin: 0% 2%;
-    padding: 2% 0% 0% 0%;
+    margin: 0;
+    padding: 2% 0 0 3%;
     color: $color4;
+
 }
 nav{
-    margin: 0% 2%;
-    padding: 2% 0% 0% 0%;
+     margin: 0% 0% 1% 3%;
+    padding: 1% 0% 0% 0%;
     color: $color4;
 }
 input{
@@ -43,8 +43,8 @@ input{
 };
 
 main {
-
     #patientsForms{
+
     @include grid-row();
     }
 
@@ -52,7 +52,7 @@ main {
         
     h2{
     margin: 0% 2%;
-    padding: 2% 0% 0% 0%;
+    padding: 5% 0% 3% 0%;
     color: $color2;
     }
 
@@ -61,15 +61,37 @@ main {
 
     #patients{
         @include grid-column(6);
-        
+
     }
 
     #forms{
         @include grid-column(6);
     }
 
+.medforms{
+    margin: 1%;
+    padding: 5%;
+    max-height: 800px;
+    overflow: hidden;
+    display: block;
+    background-color: desaturate($color3, $amount: 18%);
+    background: rgba( $color2, .1);
+
+label{
+    margin: 0 2%;
+}
+p{
+    margin: 1% 0% 3% 7%;
+}
+}
+.medforms:hover{
+    overflow-y: scroll;
+}
     #getFormDiv{
     @include grid-row();
+    margin: 1% 0 0 0;
+    
+    
     button{
     background-color: $color2;
         border: none;
@@ -79,7 +101,7 @@ main {
     text-decoration: none;
     display: block;
     font-size: 14px;
-    margin: 0 auto;
+    margin: 3% auto;
     border-radius: 8px;
 
 };
@@ -92,7 +114,8 @@ main {
 footer {
     background: $color2;
     height: 75px;
-
+    margin: 0;
+text-align: center;
     h2{
     margin: 0% 2%;
     padding: 2% 0% 0% 0%;
@@ -100,7 +123,15 @@ footer {
     display: inline-block;
 }
 button{
-    margin: 0% 2%;
-    display: inline;
+        background-color: $color1;
+        border: none;
+    color: $color2;
+    padding: 15px 32px;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 2% auto;
+    border-radius: 8px;
 }
 };

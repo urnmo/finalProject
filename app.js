@@ -108,10 +108,14 @@ app.controller("formPageController", function ($http, $scope, formsPageService, 
     };
 });
 
-// Login page controller
+// headerPage page controller
 app.controller("headerPageController", function ($scope, $http, loginService) {
     console.log("load1");
-
+$scope.loginUser = function (username, password){
+    $scope.loginUser = loginService.loginUser(username, password);
+    $scope.username = "";
+    $scope.password = "";
+}
     $scope.loggedIn = true;
 });
 
@@ -119,6 +123,7 @@ app.controller("headerPageController", function ($scope, $http, loginService) {
 app.controller("footerPageController", function ($scope, $http, loginService) {
     console.log("load1a");
     $scope.loggedIn = true;
+  
 });
 
 // RecordsPage controller
@@ -241,11 +246,11 @@ app.factory("recordsPageService", function ($http) {
 app.factory("loginService", function () {
     // need to take the value of ng-model=“userfirstName" ng-model="password" and push to a new object to send to backend
     let user = {
-        username: null,
+        username: "Fred",
         password: null,
-        loggedIn: false,
+        loggedIn: true,
     };
-
+console.log(user);
     //  is this where I need a listener/callback
     // $http({
     //     method: "GET",
@@ -272,7 +277,7 @@ app.factory("loginService", function () {
             user.loggedIn = true;
             return user
         },
-        user: function () { return user },
+        // user: function () { return user },
     };
 
 

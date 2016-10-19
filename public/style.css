@@ -1056,16 +1056,16 @@ header {
   background: #52658F;
   height: 100px; }
   header h2 {
-    margin: 0% 2%;
-    padding: 2% 0% 0% 0%;
+    margin: 2% 2% 0% 2%;
+    padding: 1% 0% 0% 2%;
     color: #E8E8E8; }
   header h3 {
-    margin: 0% 2%;
-    padding: 2% 0% 0% 0%;
+    margin: 0;
+    padding: 2% 0 0 3%;
     color: #E8E8E8; }
   header nav {
-    margin: 0% 2%;
-    padding: 2% 0% 0% 0%;
+    margin: 0% 0% 1% 3%;
+    padding: 1% 0% 0% 0%;
     color: #E8E8E8; }
   header input {
     margin: 2% 2%;
@@ -1084,28 +1084,51 @@ main {
       clear: both; }
   main h2 {
     margin: 0% 2%;
-    padding: 2% 0% 0% 0%;
+    padding: 5% 0% 3% 0%;
     color: #333A56; }
   main li {
     list-style: none; }
   main #patients {
     width: 50%;
     float: left;
-    padding-left: 1.5625rem;
-    padding-right: 1.5625rem; }
+    padding-left: 0.625rem;
+    padding-right: 0.625rem; }
+    @media screen and (min-width: 40em) {
+      main #patients {
+        padding-left: 0.9375rem;
+        padding-right: 0.9375rem; } }
     main #patients:last-child:not(:first-child) {
       float: right; }
   main #forms {
     width: 50%;
     float: left;
-    padding-left: 1.5625rem;
-    padding-right: 1.5625rem; }
+    padding-left: 0.625rem;
+    padding-right: 0.625rem; }
+    @media screen and (min-width: 40em) {
+      main #forms {
+        padding-left: 0.9375rem;
+        padding-right: 0.9375rem; } }
     main #forms:last-child:not(:first-child) {
       float: right; }
+  main .medforms {
+    margin: 1%;
+    padding: 5%;
+    max-height: 800px;
+    overflow: hidden;
+    display: block;
+    background-color: #666d7b;
+    background: rgba(51, 58, 86, 0.1); }
+    main .medforms label {
+      margin: 0 2%; }
+    main .medforms p {
+      margin: 1% 0% 3% 7%; }
+  main .medforms:hover {
+    overflow-y: scroll; }
   main #getFormDiv {
     max-width: 75rem;
     margin-left: auto;
-    margin-right: auto; }
+    margin-right: auto;
+    margin: 1% 0 0 0; }
     main #getFormDiv::before, main #getFormDiv::after {
       content: ' ';
       display: table; }
@@ -1120,17 +1143,27 @@ main {
       text-decoration: none;
       display: block;
       font-size: 14px;
-      margin: 0 auto;
+      margin: 3% auto;
       border-radius: 8px; }
 
 footer {
   background: #333A56;
-  height: 75px; }
+  height: 75px;
+  margin: 0;
+  text-align: center; }
   footer h2 {
     margin: 0% 2%;
     padding: 2% 0% 0% 0%;
     color: #E8E8E8;
     display: inline-block; }
   footer button {
-    margin: 0% 2%;
-    display: inline; }
+    background-color: #F7F5E6;
+    border: none;
+    color: #333A56;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 2% auto;
+    border-radius: 8px; }
