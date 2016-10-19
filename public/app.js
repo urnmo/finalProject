@@ -128,12 +128,11 @@ app.controller("formItselfController", function ($scope, $http, $stateParams, lo
             // post answers to backend
             formsPageService.submit();
             console.log("pushed that shit");
-            $scope.logout = function (){
             loginService.logout();
              $state.go('login');
         };
     }
-    }
+    
     // get question #x and show it
     // $stateParams.qid;
     // if its not the last question, show the next button
@@ -290,8 +289,8 @@ app.factory("recordsPageService", function ($http) {
                 method: "GET",
                 url: "https://radiant-brook-98763.herokuapp.com/records" + "/" + id,
             }).then(function (response) {
-                console.log(response.data[0]);
-                angular.copy(response.data[0], aRecord);
+                console.log(response.data);
+                angular.copy(response.data, aRecord);
                 console.log(response);
             });
             return aRecord;
