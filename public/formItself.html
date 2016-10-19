@@ -1,6 +1,6 @@
 <section>
-    <p>{{form.patient.firstName}} {{form.patient.lastName}}</p>
-    <h1> {{form.form.name}} </h1>
+    <h3 class="patName">Patient: {{form.patient.firstName}} {{form.patient.lastName}}</h3>
+    <h1 class="formName"> {{form.form.name}} </h1>
     <div id="questions">
         <ul class="questionsOnForm">
             <li ng-repeat="question in form.form.questions" ng-if="$index===qid" >

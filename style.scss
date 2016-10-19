@@ -12,25 +12,20 @@ $color4: #E8E8E8;
 
 // $grid-column-gutter: 50px;
 
-
 * {font-family: 'Bitter', serif;
 };
 
 header {
     background: $color3;
     height: 100px;
-h2{
-    margin: 2% 2% 0% 2%;
-    padding: 1% 0% 0% 2%;
-    color: $color4;
-}
-h3{
-    margin: 0;
-    padding: 2% 0 0 3%;
-    color: $color4;
 
+.mainTitle{
+    margin: 0% 2% 0% 3%;
+    padding: 3% 0% 0% 0%;
+    color: $color4;
 }
-nav{
+
+.mainNav{
      margin: 0% 0% 1% 3%;
     padding: 1% 0% 0% 0%;
     color: $color4;
@@ -40,7 +35,25 @@ input{
     // padding: 2% 0% 0% 0%;
     color: $color4;
 }
+
+
 };
+
+.formName{
+    margin: 3% 3%;
+    color: $color2;
+    display: inline-block;
+}
+.patName{
+    margin: 3% 0 0 3%;
+    color: $color2;
+    display: inline-block;
+}
+
+.questionsOnForm{
+        margin: 0;
+        padding:0;
+    }
 
 main {
     #patientsForms{

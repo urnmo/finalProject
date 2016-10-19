@@ -1,8 +1,8 @@
     <footer>
-        <div ng-if="!loggedIn"></div>
+        <div ng-if="!user.loggedIn"></div>
         <!--if logged in this will show-->
-        <div ng-if="loggedIn">
-            <h2>Logged in as {{ loginUser.username }}.</h2>
+        <div ng-if="user.loggedIn">
+            <h2>Logged in as {{ user.username }}.</h2>
             <!-- $scope.loggedIn -->
             <!--<div ng-if="!loggedIn"></div>
              <!-- $scope.loggedIn -->

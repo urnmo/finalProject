@@ -4,6 +4,12 @@ let app = angular.module('MedFormsApp', ['ui.router']);
 app.config(function ($stateProvider) {
 
     $stateProvider.state({
+        name: "login",
+        url: "/login",
+        component: "graphic",
+    })
+
+    $stateProvider.state({
         name: "forms",
         url: "/forms",
         component: "formsPage",
@@ -46,11 +52,17 @@ app.component("footerPage", {
     controller: "footerPageController",
 });
 
+//graphic page component
+app.component("graphic", {
+    templateUrl: "graphic.html",
+    controller: "graphicController",
+});
 //forms page component
 app.component("formsPage", {
     templateUrl: "formPage.html",
     controller: "formPageController",
 });
+
 // RecordsPage component
 app.component("recordsPage", {
     templateUrl: "recordsView.html",
@@ -63,33 +75,65 @@ app.component("formItself", {
     controller: "formItselfController",
 });
 
-//recorditselfcontroller
-app.controller("recordItselfController", function ($scope, $http, $stateParams, recordItselfService) {
-    console.log('load5')
-    $scope.recordItself = recordItselfService.get($stateParams.id);
-    console.log($stateParams.id);
+
+
+
+
+// headerPage page controller
+app.controller("headerPageController", function ($scope, $http, $state, loginService) {
+    console.log("load1");
+    $scope.loginUser = function (username, password) {
+        $scope.loginUser = loginService.loginUser(username, password);
+        $state.go("forms")
+    }
+    $scope.user = loginService.user();
+});
+
+// footerPage controller
+app.controller("footerPageController", function ($scope, $state, $http, loginService) {
+    console.log("load1a");
+    $scope.user = loginService.user();
+    $scope.logout = function (){
+        loginService.logout();
+        $state.go('login');
+    }
+
+    // $state.go("login");
+
+    // todo: you call a function called 'logout' but it doesnt exist
+});
+
+// graphicController
+app.controller("graphicController", function ($scope, $stateParams, loginService) {
+    $scope.user = loginService.user();
 })
 
 //formItselfController
-app.controller("formItselfController", function ($scope, $http, $stateParams, formsPageService, $state) {
-    console.log("load 4x");
-    $scope.form = formsPageService.getForm();
-    $scope.qid = parseInt($stateParams.qid)
-    
-    $scope.next = function () {
-        $state.go('formItself', { qid: parseInt($stateParams.qid) + 1 });
-    };
-    $scope.back = function () {
-        $state.go('formItself', { qid: parseInt($stateParams.qid) - 1 });
-    };
+app.controller("formItselfController", function ($scope, $http, $stateParams, loginService, formsPageService, $state) {
+    $scope.user = loginService.user();
+    if ($scope.user.loggedIn === true) {
+        console.log("load 4x");
+        $scope.form = formsPageService.getForm();
+        $scope.qid = parseInt($stateParams.qid);
 
-    $scope.submit = function () {
-        // route to login page
-        // post answers to backend
-       formsPageService.submit();
-        console.log("pushed that shit")
-        $state.go()
-    };
+        $scope.next = function () {
+            $state.go('formItself', { qid: parseInt($stateParams.qid) + 1 });
+        };
+        $scope.back = function () {
+            $state.go('formItself', { qid: parseInt($stateParams.qid) - 1 });
+        };
+
+        $scope.submit = function () {
+            // route to login page
+            // post answers to backend
+            formsPageService.submit();
+            console.log("pushed that shit");
+            $scope.logout = function (){
+            loginService.logout();
+             $state.go('login');
+        };
+    }
+    }
     // get question #x and show it
     // $stateParams.qid;
     // if its not the last question, show the next button
@@ -98,38 +142,43 @@ app.controller("formItselfController", function ($scope, $http, $stateParams, fo
 });
 
 // FormsPage controller
-app.controller("formPageController", function ($http, $scope, formsPageService, $state) {
-    console.log("load2");
-    $scope.forms = formsPageService.allForms();
-    $scope.patients = formsPageService.allPatients();
-    $scope.target = function () {
-        formsPageService.target($scope.chosenForm, $scope.chosenPatient)
-        $state.go('formItself', { qid: 0 });
-    };
+app.controller("formPageController", function ($http, $scope, loginService, $stateParams, formsPageService, $state) {
+    $scope.user = loginService.user();
+    if ($scope.user.loggedIn === true) {
+        console.log("load2");
+        $scope.forms = formsPageService.allForms();
+        $scope.patients = formsPageService.allPatients();
+        $scope.target = function () {
+            formsPageService.target($scope.chosenForm, $scope.chosenPatient)
+            $state.go('formItself', { qid: 0 });
+        };
+    } else {
+        $state.go('login');
+    }
 });
 
-// headerPage page controller
-app.controller("headerPageController", function ($scope, $http, loginService) {
-    console.log("load1");
-$scope.loginUser = function (username, password){
-    $scope.loginUser = loginService.loginUser(username, password);
-    $scope.username = "";
-    $scope.password = "";
-}
-    $scope.loggedIn = true;
-});
-
-// footerPage controller
-app.controller("footerPageController", function ($scope, $http, loginService) {
-    console.log("load1a");
-    $scope.loggedIn = true;
-  
-});
 
 // RecordsPage controller
-app.controller("recordsPageController", function ($scope, recordsPageService, $stateParams) {
-    console.log("load3");
-    $scope.records = recordsPageService.getRecords();
+app.controller("recordsPageController", function ($scope, recordsPageService, loginService, $stateParams) {
+    $scope.user = loginService.user();
+    if ($scope.user.loggedIn === true) {
+        console.log("load3");
+        $scope.records = recordsPageService.getRecords();
+        $scope.target = function (){
+            recordsPageService.target(records.id)
+            $state.go('recordItself')
+        }
+    }
+});
+
+//recorditselfcontroller
+app.controller("recordItselfController", function ($scope, $http, $stateParams, loginService, recordsPageService) {
+    $scope.user = loginService.user();
+    if ($scope.user.loggedIn === true) {
+        console.log('load5')
+        let id = parseInt($stateParams.id);
+        $scope.recordItself = recordsPageService.recordItself(id);
+    }
 
 });
 
@@ -144,7 +193,7 @@ app.factory("formsPageService", function ($http) {
         fid: null,
         pid: null,
     };
-    
+
 
     return {
         allForms: function () {
@@ -179,35 +228,35 @@ app.factory("formsPageService", function ($http) {
             if (formItself === null) {
                 formItself = {};
 
-            $http({
-                method: "GET",
-                url: "https://radiant-brook-98763.herokuapp.com/forms" + "/" + fid + "/" + pid,
-            }).then(function (response) {
-                angular.copy(response.data, formItself);
-                console.log(response);
+                $http({
+                    method: "GET",
+                    url: "https://radiant-brook-98763.herokuapp.com/forms" + "/" + fid + "/" + pid,
+                }).then(function (response) {
+                    angular.copy(response.data, formItself);
+                    console.log(response);
 
-            });
+                });
             }
 
-            console.log(formItself); 
+            console.log(formItself);
 
             return formItself;
         },
-            submit: function (){
-                console.log(formItself);
-                let answers = [];
-                for (let question of formItself.form.questions) {
-                    answers.push(question.answer);
-                }
-                console.log(answers);
-                // angular.copy(formItself, answers); // issue
-
-                $http({
-                    method: "POST",
-                    url: "https://radiant-brook-98763.herokuapp.com/records/" + fid + "/" + pid,
-                    data: answers,
-                })
+        submit: function () {
+            console.log(formItself);
+            let answers = [];
+            for (let question of formItself.form.questions) {
+                answers.push(question.answer);
             }
+            console.log(answers);
+            // angular.copy(formItself, answers); // issue
+
+            $http({
+                method: "POST",
+                url: "https://radiant-brook-98763.herokuapp.com/records/" + fid + "/" + pid,
+                data: answers,
+            })
+        }
     }
 
 });
@@ -216,58 +265,68 @@ app.factory("formsPageService", function ($http) {
 
 // RecordsPageService
 app.factory("recordsPageService", function ($http) {
-    let records = [{ id: 22324, name: "Foot Form", date: "11/24/2016", patient: { firstName: "Earl", lastName: "Scruggs" } },];
+    let records = [];
+    let aRecord = {
+    };
+    let id = null;
 
     // function: request all results from the backend
-
 
     return {
         getRecords: function () {
             console.log("ahoy hoy"),
-            $http({
-                method: "GET",
-                url: "https://radiant-brook-98763.herokuapp.com/records",
-            }).then(function (response) {
-                angular.copy(response.data, records);
-            });
+                $http({
+                    method: "GET",
+                    url: "https://radiant-brook-98763.herokuapp.com/records",
+                }).then(function (response) {
+                    angular.copy(response.data, records);
+                });
             console.log(records);
             return records;
+        },
 
-        }
-
+        recordItself: function (id) {
+            $http({
+                method: "GET",
+                url: "https://radiant-brook-98763.herokuapp.com/records" + "/" + id,
+            }).then(function (response) {
+                console.log(response.data[0]);
+                angular.copy(response.data[0], aRecord);
+                console.log(response);
+            });
+            return aRecord;
+        },
+        getRec: function () { return aRecord },
     }
-    // function: search through the backend for user results
-    // render search results
-    // return {
-    //     allRecords: function () { return records; },
-    // }
 });
+
+
+// function: search through the backend for user results
+// render search results
+// return {
+//     allRecords: function () { return records; },
+
 
 app.factory("loginService", function () {
     // need to take the value of ng-model=“userfirstName" ng-model="password" and push to a new object to send to backend
     let user = {
         username: "Fred",
         password: null,
-        loggedIn: true,
+        loggedIn: false,
     };
-console.log(user);
-    //  is this where I need a listener/callback
-    // $http({
-    //     method: "GET",
-    //     url: "",
-    // }).then(function (response) {
-    //     angular.copy(response.data, loginUser);
-    // });
-    // return {
-    //     user: function () {
-    //         return user;
-    //     }
-    // }
+    console.log(user);
+
 
     return {
 
         logout: function () {
+            user.username = "";
+            user.password = "";
             user.loggedIn = false;
+            console.log('logging out');
+            console.log(user);
+
+            return user
         },
 
         loginUser: function (username, password) {
@@ -277,59 +336,18 @@ console.log(user);
             user.loggedIn = true;
             return user
         },
-        // user: function () { return user },
+        user: function () { return user },
     };
-
-
 })
 
-app.factory("formItselfService", function () {
-})
+// app.factory("recordItselfService", function ($http, recordsPageService) {
 
-app.factory("recordItselfService", function () {
-    let recordItself = {
-        id: 12324,
-        name: "Foot Form",
-        date: null,
-        patient: {
-            firstName: "Jeb",
-            lastName: "Gladys",
-        },
-        records: [
-            {
-                id: null,
-                title: "Pain1",
-                type: "booleanQ",
-                text: "Are you experiencing pain today?",
-                answerValue: "yes",
-            },
-            {
-                id: null,
-                title: "Pain2",
-                type: "scale1-10",
-                text: "Rate your pain on scale",
-                answerValue: "7",
-            },
-            {
-                id: null,
-                title: "Pain4",
-                type: "ifYesRate",
-                text: "Are you experiencing pain today? If 'Yes, please rate it.",
-                answerValue: "9",
-            },
-            {
-                id: null,
-                title: "Pain5",
-                type: "checkBox",
-                text: "Choose answer that best fits your pain.",
-                answerValue: '5',
-            },
-        ],
-    }
-    return {
-        get: function () { return recordItself },
-    }
-});
+
+
+
+//     return {
+
+
 
 
 

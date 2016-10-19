@@ -1055,21 +1055,31 @@ button {
 header {
   background: #52658F;
   height: 100px; }
-  header h2 {
-    margin: 2% 2% 0% 2%;
-    padding: 1% 0% 0% 2%;
+  header .mainTitle {
+    margin: 0% 2% 0% 3%;
+    padding: 3% 0% 0% 0%;
     color: #E8E8E8; }
-  header h3 {
-    margin: 0;
-    padding: 2% 0 0 3%;
-    color: #E8E8E8; }
-  header nav {
+  header .mainNav {
     margin: 0% 0% 1% 3%;
     padding: 1% 0% 0% 0%;
     color: #E8E8E8; }
   header input {
     margin: 2% 2%;
     color: #E8E8E8; }
+
+.formName {
+  margin: 3% 3%;
+  color: #333A56;
+  display: inline-block; }
+
+.patName {
+  margin: 3% 0 0 3%;
+  color: #333A56;
+  display: inline-block; }
+
+.questionsOnForm {
+  margin: 0;
+  padding: 0; }
 
 main {
   background: #F7F5E6; }
