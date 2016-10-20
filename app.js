@@ -188,9 +188,9 @@ app.controller("recordItselfController", function ($scope, $http, $stateParams, 
 // FormsPageService
 app.factory("formsPageService", function ($http) {
     // render titles/links to all available forms
-    let forms = [{ id: 1, title: "form1", description: "This is the foot form." }, { id: 2, title: "form2", description: "This is the back form." }, { id: 3, title: "form3", description: "This is the neck form." }, { id: 4, title: "form4", description: "This is the arm form." },];
+    let forms = [];
 
-    let patients = [{ firstName: "Dave", lastName: "Blanton", id: 1 }, { firstName: "Ted", lastName: "Kay", id: 2 }, { firstName: "Andy", lastName: "Jones", id: 3 }, { firstName: "Jeb", lastName: "Bush", id: 4 }, { firstName: "Pedro", lastName: "Martinez", id: 5 },];
+    let patients = [];
     let formItself = null;
     let fidPid = {
         fid: null,
@@ -248,9 +248,14 @@ app.factory("formsPageService", function ($http) {
         submit: function () {
             console.log(formItself);
             let answers = [];
-            for (let question of formItself.form.questions) {
-                answers.push(question.answer);
+
+            for (let i = 0; i < formItself.form.questions.length; i++) {
+                answers.push(formItself.form.questions[i].answer);
             }
+
+            // for (let question of formItself.form.questions) {
+            //     answers.push(question.answer);
+            // }
             console.log(answers);
             // angular.copy(formItself, answers); // issue
 

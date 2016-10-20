@@ -180,9 +180,9 @@ app.controller("recordItselfController", function ($scope, $http, $stateParams, 
 // FormsPageService
 app.factory("formsPageService", function ($http) {
     // render titles/links to all available forms
-    var forms = [{ id: 1, title: "form1", description: "This is the foot form." }, { id: 2, title: "form2", description: "This is the back form." }, { id: 3, title: "form3", description: "This is the neck form." }, { id: 4, title: "form4", description: "This is the arm form." }];
+    var forms = [];
 
-    var patients = [{ firstName: "Dave", lastName: "Blanton", id: 1 }, { firstName: "Ted", lastName: "Kay", id: 2 }, { firstName: "Andy", lastName: "Jones", id: 3 }, { firstName: "Jeb", lastName: "Bush", id: 4 }, { firstName: "Pedro", lastName: "Martinez", id: 5 }];
+    var patients = [];
     var formItself = null;
     var fidPid = {
         fid: null,
@@ -238,31 +238,14 @@ app.factory("formsPageService", function ($http) {
         submit: function submit() {
             console.log(formItself);
             var answers = [];
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
 
-            try {
-                for (var _iterator = formItself.form.questions[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var question = _step.value;
-
-                    answers.push(question.answer);
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
+            for (var i = 0; i < formItself.form.questions.length; i++) {
+                answers.push(formItself.form.questions[i].answer);
             }
 
+            // for (let question of formItself.form.questions) {
+            //     answers.push(question.answer);
+            // }
             console.log(answers);
             // angular.copy(formItself, answers); // issue
 
