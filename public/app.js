@@ -212,8 +212,8 @@ app.factory("formsPageService", function ($http) {
         },
 
         target: function target(chosenForm, chosenPatient) {
-            fid = chosenForm;
-            pid = chosenPatient;
+            fidPid.fid = chosenForm;
+            fidPid.pid = chosenPatient;
             return fidPid;
         },
 
@@ -224,7 +224,7 @@ app.factory("formsPageService", function ($http) {
 
                 $http({
                     method: "GET",
-                    url: "https://radiant-brook-98763.herokuapp.com/forms" + "/" + fid + "/" + pid
+                    url: "https://radiant-brook-98763.herokuapp.com/forms" + "/" + fidPid.fid + "/" + fidPid.pid
                 }).then(function (response) {
                     angular.copy(response.data, formItself);
                     console.log(response);
