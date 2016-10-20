@@ -268,7 +268,7 @@ app.factory("formsPageService", function ($http) {
 
             $http({
                 method: "POST",
-                url: "https://radiant-brook-98763.herokuapp.com/records/" + fid + "/" + pid,
+                url: "https://radiant-brook-98763.herokuapp.com/records/" + fid.Pid.fid + "/" + fidPid.pid,
                 data: answers
             });
         }
