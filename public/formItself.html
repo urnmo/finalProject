@@ -1,111 +1,112 @@
 <section>
-    <h3 class="patName">Patient: {{form.patient.firstName}} {{form.patient.lastName}}</h3>
-    <h1 class="formName"> {{form.form.name}} </h1>
-    <div id="questions">
-        <ul class="questionsOnForm">
-            <li ng-repeat="question in form.form.questions" ng-if="$index===qid" >
-                <h2 id="questionTitle">{{question.title}}</h2>
+	<h3 class="patName">Patient: {{form.patient.firstName}} {{form.patient.lastName}}</h3>
+	<h1 class="formName"> {{form.form.name}} </h1>
+	<div id="questions">
+		<ul class="questionsOnForm">
+			<li ng-repeat="question in form.form.questions" ng-if="$index===qid">
+				<h2 id="questionTitle">{{question.title}}</h2>
 
-                <div class="booleanQ" ng-if="question.type==='booleanQ'">
-                    <!--ng-if needs to an expression -->
-                    <p class="questionText">{{question.text}}</p>
-                    <input type="radio" name="yesNo" ng-model="question.answer" value="true">
-                    <label for="yes">Yes</label>
-                    <input type="radio" name="yesNo" value="false" ng-model="question.answer">
-                    <label for="no">No</label>
-                </div>
+				<div class="booleanQ" ng-if="question.type==='booleanQ'">
+					<!--ng-if needs to an expression -->
+					<p class="questionText">{{question.text}}</p>
+					<input type="radio" name="yesNo" ng-model="question.answer" value="true">
+					<label for="yes">Yes</label>
+					<input type="radio" name="yesNo" value="false" ng-model="question.answer">
+					<label for="no">No</label>
+				</div>
 
-                <div class="fillIn" ng-if="question.type==='fillIn'">
-                    <!--ng-if needs to an expression -->
-                    <p class="questionText">{{question.text}}</p>
-                    <input type="text" name="fillIn" ng-model="question.answer" value="true">
-                    <!--what should the ng-model be use-keyboard="Deutsch"?-->
-                    <label for="yes">Fill in the blank</label>
-                   
-                </div>
-<!--ng-if="question.type==='scale1-10'"-->
-                <div class="scale1-10" ng-if="question.type==='scale1-10'">
-                    <p class="questionText">{{question.text}}</p> <input type="radio" name="scale" ng-model="question.answer" value="1">
-                    <label for="1">1</label>
-                    <input type="radio" name="scale" ng-model="question.answer" value="2">
-                    <label for="2">2</label>
-                    <input type="radio" name="scale" ng-model="question.answer" value="3">
-                    <label for="3">3</label>
-                    <input type="radio" name="scale" ng-model="question.answer" value="4">
-                    <label for="4">4</label>
-                    <input type="radio" name="scale" ng-model="question.answer" value="5">
-                    <label for="5">5</label>
-                    <input type="radio" name="scale" ng-model="question.answer" value="6">
-                    <label for="6">6</label>
-                    <input type="radio" name="scale" ng-model="question.answer" value="7">
-                    <label for="7">7</label>
-                    <input type="radio" name="scale" ng-model="question.answer" value="8">
-                    <label for="8">8</label><input type="radio" name="scale" ng-model="question.answer" value="9">
-                    <label for="9">9</label>
-                    <input type="radio" name="scale" ng-model="question.answer" value="10">
-                    <label for="10">10</label>
-                </div>
+				<div class="fillIn" ng-if="question.type==='fillIn'">
+					<!--ng-if needs to an expression -->
+					<p class="questionText">{{question.text}}</p>
+					<input type="text" name="fillIn" ng-model="question.answer" value="true">
+					<!--what should the ng-model be use-keyboard="Deutsch"?-->
+					<label for="yes">Fill in the blank</label>
 
-<!---->
-                <div class="ifYesQuestions" ng-if="question.type==='ifYesQuestions'" >
-                    <p class="questionText">{{question.text}}</p>
-                    <input type="radio"  name="ifYes" ng-model="question.answer" value="true">
-                    <label for="yes">No</label>
-                    <input type="radio" name="ifYes" value="false" ng-model="question.answer">
-                    <label for="no">Yes</label>
-                    <input type="radio" name="ifYesA" value="false" ng-model="question.answer">
-                    <label for="ifYesA">My pain prevents me from lifting heavy things.</label>
-                    <input type="radio" name="ifYesA" value="false" ng-model="question.answer">
-                    <label for="ifYesA">My pain makes lifting heavy things more difficult.</label>
-                    <input type="radio" name="ifYesA" value="false" ng-model="question.answer">
-                    <label for="ifYesA">My pain makes lifting things over 10lbs more difficult.</label>
-                </div>
+				</div>
+				<!--ng-if="question.type==='scale1-10'"-->
+				<div class="scale1-10" ng-if="question.type==='scale1-10'">
+					<p class="questionText">{{question.text}}</p> <input type="radio" name="scale" ng-model="question.answer" value="1">
+					<label for="1">1</label>
+					<input type="radio" name="scale" ng-model="question.answer" value="2">
+					<label for="2">2</label>
+					<input type="radio" name="scale" ng-model="question.answer" value="3">
+					<label for="3">3</label>
+					<input type="radio" name="scale" ng-model="question.answer" value="4">
+					<label for="4">4</label>
+					<input type="radio" name="scale" ng-model="question.answer" value="5">
+					<label for="5">5</label>
+					<input type="radio" name="scale" ng-model="question.answer" value="6">
+					<label for="6">6</label>
+					<input type="radio" name="scale" ng-model="question.answer" value="7">
+					<label for="7">7</label>
+					<input type="radio" name="scale" ng-model="question.answer" value="8">
+					<label for="8">8</label><input type="radio" name="scale" ng-model="question.answer" value="9">
+					<label for="9">9</label>
+					<input type="radio" name="scale" ng-model="question.answer" value="10">
+					<label for="10">10</label>
+				</div>
 
- <!---->
-                <div class="ifYesRate" ng-if="question.type==='ifYesRate'">
-                    <!--ng-if needs to an expression-->
-                    <p class="questionText">{{question.text}}</p>
-                    <input type="radio" name="yesNo2" ng-model="question.answer" value="true">
-                    <label for="yes">No</label>
-                    <input type="radio" name="yesNo2" value="false" ng-model="question.answer">
-                    <label for="no">Yes</label>
+				<!---->
+				<div class="ifYesQuestions" ng-if="question.type==='ifYesQuestions'">
+					<p class="questionText">{{question.text}}</p>
+					<input type="radio" name="ifYes" ng-model="question.answer" value="true">
+					<label for="yes">No</label>
+					<input type="radio" name="ifYes" value="false" ng-model="question.answer">
+					<label for="no">Yes</label>
+					<input type="radio" name="ifYesA" value="false" ng-model="question.answer">
+					<label for="ifYesA">My pain prevents me from lifting heavy things.</label>
+					<input type="radio" name="ifYesA" value="false" ng-model="question.answer">
+					<label for="ifYesA">My pain makes lifting heavy things more difficult.</label>
+					<input type="radio" name="ifYesA" value="false" ng-model="question.answer">
+					<label for="ifYesA">My pain makes lifting things over 10lbs more difficult.</label>
+				</div>
 
-                    <input type="radio" name="yesNo2a" ng-model="question.answer" value="true">
-                    <label for="yes">1</label>
-                    <input type="radio" name="yesNo2a" value="false" ng-model="question.answer">
-                    <label for="no">2</label>
-                    <input type="radio" name="yesNo2a" ng-model="question.answer" value="true">
-                    <label for="yes">3</label>
-                    <input type="radio" name="yesNo2a" value="false" ng-model="question.answer">
-                    <label for="no">4</label>
-                </div>
+				<!---->
+				<div class="ifYesRate" ng-if="question.type==='ifYesRate'">
+					<!--ng-if needs to an expression-->
+					<p class="questionText">{{question.text}}</p>
+					<input type="radio" name="yesNo2" ng-model="question.answer" value="true">
+					<label for="yes">No</label>
+					<input type="radio" name="yesNo2" value="false" ng-model="question.answer">
+					<label for="no">Yes</label>
 
-<!---->
-                <div class="checkBox" ng-if="question.type==='checkBox'">
-                    <!--ng-if needs to an expression-->
-                    <p class="questionText">{{question.text}}</p>
-                    <input type="radio"  name="checkBox" ng-model="question.answer" value="true">
-                    <label for="yes">Face-melting pain.</label>
-                    <input type="radio" name="checkBox " value="false" ng-model="question.answer">
-                    <label for="no">Dear god, this is horrible.</label>
-                    <input type="radio" name="checkBox" ng-model="question.answer" value="true">
-                    <label for="yes">I've had worse.</label>
-                    <input type="radio" name="checkBox " value="false" ng-model="question.answer">
-                    <label for="no">Meh.</label>
-                </div>
+					<input type="radio" name="yesNo2a" ng-model="question.answer" value="true">
+					<label for="yes">1</label>
+					<input type="radio" name="yesNo2a" value="false" ng-model="question.answer">
+					<label for="no">2</label>
+					<input type="radio" name="yesNo2a" ng-model="question.answer" value="true">
+					<label for="yes">3</label>
+					<input type="radio" name="yesNo2a" value="false" ng-model="question.answer">
+					<label for="no">4</label>
+				</div>
 
-<!-- -->
-                <button ng-if="$last" ng-click="submit()" >SUBMIT</button>
-                <button ng-if="!$first" ng-click="back()" >BACK</button>
-                <button ng-if="!$last" ng-click="next()">NEXT</button>
-            </li>
-            <!--add ng-if here so it only shows on the last question question.final in form object-->
+				<!---->
+				<div class="checkBox" ng-if="question.type==='checkBox'">
+					<!--ng-if needs to an expression-->
+					<p class="questionText">{{question.text}}</p>
+					<input type="radio" name="checkBox" ng-model="question.answer" value="true">
+					<label for="yes">Face-melting pain.</label>
+					<input type="radio" name="checkBox " value="false" ng-model="question.answer">
+					<label for="no">Dear god, this is horrible.</label>
+					<input type="radio" name="checkBox" ng-model="question.answer" value="true">
+					<label for="yes">I've had worse.</label>
+					<input type="radio" name="checkBox " value="false" ng-model="question.answer">
+					<label for="no">Meh.</label>
+				</div>
 
-<!---->
-<!-- -->
-        </ul>
+				<!-- <-->
 
-    </div>
+				<button id="back" ng-if="!$first" ng-click="back()">BACK</button>
+				<button id="next" ng-if="!$last" ng-click="next()">NEXT</button>
+				<button id="last" ng-if="$last" ng-click="submit()">SUBMIT</button>
+			</li>
+			<!--add ng-if here so it only shows on the last question question.final in form object-->
+
+			<!---->
+			<!-- -->
+		</ul>
+
+	</div>
 
 
 

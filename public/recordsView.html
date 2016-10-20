@@ -1,8 +1,8 @@
         <!--therapist results page
     set up a ng-repeat for user results with description-->
         <div>
-        <h2>Records</h2>
-        <ul >
+        <h2 id="recHead" >Records</h2>
+        <ul id="recCon">
             <li ng-repeat="record in records" class="formRecords">  
             <a ui-sref="recordItself({id:record.id})"><p class="recordDescriptor"><span>{{recordItself.date}}</span>  <span>{{record.id}}</span>  <span>{{record.name}}</span>  <span>{{record.date}}</span>  <span>{{record.patient.firstName}} </span>  <span>{{record.patient.lastName}} </span></p></a>
            </li>

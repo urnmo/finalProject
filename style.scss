@@ -15,47 +15,161 @@ $color4: #E8E8E8;
 * {font-family: 'Bitter', serif;
 };
 
+img{
+    align-items: center;
+}
 header {
     background: $color3;
-    height: 100px;
+    height: 15%;
+    
+    .mainNav{
+        a{text-decoration: none;}
+    }
+
+h2{
+    margin: 0% 2% 0% 3%;
+    padding: 3% 0% 0% 0%;
+    color: $color1;
+}
+    #loginBtn{
+    background-color: $color2;
+        border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 3% auto;
+    border-radius: 8px;
+
+}
 
 .mainTitle{
     margin: 0% 2% 0% 3%;
-    padding: 3% 0% 0% 0%;
+    padding: 1% 0% 0% 0%;
     color: $color4;
 }
 
 .mainNav{
      margin: 0% 0% 1% 3%;
-    padding: 1% 0% 0% 0%;
+    padding: .5% 0% 0% 0%;
     color: $color4;
 }
 input{
-    margin: 2% 2%;
-    // padding: 2% 0% 0% 0%;
-    color: $color4;
+    margin: 0% 2% 0% 3%;
+    // padding: 3% 0% 0% 0%;
+    color: $color2;
+}
 }
 
 
-};
 
 .formName{
     margin: 3% 3%;
     color: $color2;
-    display: inline-block;
+    display: block;
 }
 .patName{
     margin: 3% 0 0 3%;
     color: $color2;
-    display: inline-block;
+    display: block;
 }
 
 .questionsOnForm{
-        margin: 0;
+        margin: 0 3%;
         padding:0;
     }
+    #questionTitle{
+        margin: 0 3%;
+        padding:0;
+    }
+.scale1-10{
+    input{
+        margin: 1%; 
+    }
+}
+
 
 main {
+     a{text-decoration: none;}
+color: $color2;
+    .questionsOnRecords{
+        margin: 0;
+    }
+    #rqt{margin: 0;
+    padding: 1%;}
+
+    #rqtx{margin: 0;
+    padding: 1%;}
+    #ranswer{margin: 0;
+    padding: 1%;}
+    #recFname{
+          margin: 0;
+        padding: 1% 0 0 1%;
+    }
+    #recordStuff{
+       margin: 0;
+        padding: 1% 0 0 1%;
+    }
+    #recordTitle{
+        margin: 0;
+        padding: 0;
+    }
+
+        #last{
+    background-color: $color2;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 3% auto;
+    border-radius: 8px;
+}
+    #next{
+    background-color: $color2;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 3% auto;
+    border-radius: 8px;
+}
+    #back{
+    background-color: $color2;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 3% auto;
+    border-radius: 8px;
+}
+
+
+
+
+
+    #recHead{
+        margin: 0% 1%;
+        padding: 1% 1%;
+    }
+    .recordDescriptor{
+        margin: 0;
+        padding: 0;
+    }
+    #recCon{
+        margin: 0% 2%;
+        padding: 1% 1%;
+    }
     #patientsForms{
 
     @include grid-row();
@@ -124,6 +238,11 @@ p{
 
 
 
+
+
+
+
+
 footer {
     background: $color2;
     height: 75px;
@@ -136,8 +255,8 @@ text-align: center;
     display: inline-block;
 }
 button{
-        background-color: $color1;
-        border: none;
+    background-color: $color1;
+    border: none;
     color: $color2;
     padding: 15px 32px;
     text-align: center; 

@@ -1052,37 +1052,130 @@ button {
 * {
   font-family: 'Bitter', serif; }
 
+img {
+  align-items: center; }
+
 header {
   background: #52658F;
-  height: 100px; }
-  header .mainTitle {
+  height: 15%; }
+  header .mainNav a {
+    text-decoration: none; }
+  header h2 {
     margin: 0% 2% 0% 3%;
     padding: 3% 0% 0% 0%;
+    color: #F7F5E6; }
+  header #loginBtn {
+    background-color: #333A56;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 3% auto;
+    border-radius: 8px; }
+  header .mainTitle {
+    margin: 0% 2% 0% 3%;
+    padding: 1% 0% 0% 0%;
     color: #E8E8E8; }
   header .mainNav {
     margin: 0% 0% 1% 3%;
-    padding: 1% 0% 0% 0%;
+    padding: .5% 0% 0% 0%;
     color: #E8E8E8; }
   header input {
-    margin: 2% 2%;
-    color: #E8E8E8; }
+    margin: 0% 2% 0% 3%;
+    color: #333A56; }
 
 .formName {
   margin: 3% 3%;
   color: #333A56;
-  display: inline-block; }
+  display: block; }
 
 .patName {
   margin: 3% 0 0 3%;
   color: #333A56;
-  display: inline-block; }
+  display: block; }
 
 .questionsOnForm {
-  margin: 0;
+  margin: 0 3%;
   padding: 0; }
 
+#questionTitle {
+  margin: 0 3%;
+  padding: 0; }
+
+.scale1-10 input {
+  margin: 1%; }
+
 main {
+  height: 100%;
+  color: #333A56;
   background: #F7F5E6; }
+  main a {
+    text-decoration: none; }
+  main .questionsOnRecords {
+    margin: 0; }
+  main #rqt {
+    margin: 0;
+    padding: 1%; }
+  main #rqtx {
+    margin: 0;
+    padding: 1%; }
+  main #ranswer {
+    margin: 0;
+    padding: 1%; }
+  main #recFname {
+    margin: 0;
+    padding: 1% 0 0 1%; }
+  main #recordStuff {
+    margin: 0;
+    padding: 1% 0 0 1%; }
+  main #recordTitle {
+    margin: 0;
+    padding: 0; }
+  main #last {
+    background-color: #333A56;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 3% auto;
+    border-radius: 8px; }
+  main #next {
+    background-color: #333A56;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 3% auto;
+    border-radius: 8px; }
+  main #back {
+    background-color: #333A56;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 3% auto;
+    border-radius: 8px; }
+  main #recHead {
+    margin: 0% 1%;
+    padding: 1% 1%; }
+  main .recordDescriptor {
+    margin: 0;
+    padding: 0; }
+  main #recCon {
+    margin: 0% 2%;
+    padding: 1% 1%; }
   main #patientsForms {
     max-width: 75rem;
     margin-left: auto;

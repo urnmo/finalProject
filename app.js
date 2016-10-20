@@ -83,7 +83,7 @@ app.component("formItself", {
 app.controller("headerPageController", function ($scope, $http, $state, loginService) {
     console.log("load1");
     $scope.loginUser = function (username, password) {
-        $scope.loginUser = loginService.loginUser(username, password);
+       loginService.loginUser(username, password);
         $state.go("forms")
     }
     $scope.user = loginService.user();
@@ -98,7 +98,7 @@ app.controller("footerPageController", function ($scope, $state, $http, loginSer
         $state.go('login');
     }
 
-    // $state.go("login");
+    $state.go("login");
 
     // todo: you call a function called 'logout' but it doesnt exist
 });
@@ -178,8 +178,12 @@ app.controller("recordItselfController", function ($scope, $http, $stateParams, 
         let id = parseInt($stateParams.id);
         $scope.recordItself = recordsPageService.recordItself(id);
     }
-
 });
+
+
+
+
+
 
 // FormsPageService
 app.factory("formsPageService", function ($http) {
@@ -260,7 +264,6 @@ app.factory("formsPageService", function ($http) {
 
 });
 // function: when form is clicked make a request to the backend for specific form and if it is a returning user populate user info. 
-// display selected form in a new window 
 
 // RecordsPageService
 app.factory("recordsPageService", function ($http) {
@@ -299,13 +302,6 @@ app.factory("recordsPageService", function ($http) {
     }
 });
 
-
-// function: search through the backend for user results
-// render search results
-// return {
-//     allRecords: function () { return records; },
-
-
 app.factory("loginService", function () {
     // need to take the value of ng-model=“userfirstName" ng-model="password" and push to a new object to send to backend
     let user = {
@@ -339,12 +335,7 @@ app.factory("loginService", function () {
     };
 })
 
-// app.factory("recordItselfService", function ($http, recordsPageService) {
 
-
-
-
-//     return {
 
 
 

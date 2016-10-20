@@ -1,17 +1,16 @@
-<section>
-    <p>{{recordItself.patient.firstName}} {{recordItself.patient.lastName}} </p>
-    <h1> {{recordItself.form.name}}</h1>
+<section id="recordStuff" >
+    <h2 id="recordStuff">Patient: {{recordItself.patient.firstName}} {{recordItself.patient.lastName}} </h2>
+    <h1 id="recFname"> {{recordItself.form.name}}</h1>
     <div id="records">
         <h2 id="recordTitle">{{record.title}}</h2>
         <ul class="questionsOnRecords">
             <li ng-repeat="question in recordItself.form.questions">
 
                 <div>
-                    <h3>{{question.title}}</h3>
-                    <p>{{question.text}}</p>
-                    <p>{{ recordItself.answers[$index].text }}</p>
+                    <h3 id="rqt">{{question.title}}</h3>
+                    <p id="rqtx">{{question.text}}</p>
+                    <p id="ranswer">Score: {{ recordItself.answers[$index].text }}</p>
                     <!--two arrays that are parallel-->
                 </div>
             </li>
-                <button ng-click="back()">BACK</button>
 </section>
